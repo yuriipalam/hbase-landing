@@ -1,10 +1,8 @@
 import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 import importPlugin from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier";
 
@@ -14,9 +12,9 @@ export default defineConfig([
     "build",
     "dist",
     "tsconfig.json",
-    "postcss.config.js",
-    "tailwind.config.ts",
-    "prettier.config.cjs",
+    "prettier.config.js",
+    "react-router.config.ts",
+    ".react-router"
   ]),
   {
     files: ["**/*.{ts,tsx}"],
@@ -24,7 +22,6 @@ export default defineConfig([
       js.configs.recommended,
       tseslint.configs.recommended,
       reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -32,8 +29,7 @@ export default defineConfig([
     },
     plugins: {
       prettier,
-      "jsx-a11y": jsxA11y,
-      import: importPlugin,
+      import: importPlugin
     },
     settings: {
       // so import/no-unresolved understands TS paths and "@/*"
@@ -44,12 +40,11 @@ export default defineConfig([
       },
     },
     rules: {
-      ...jsxA11y.configs.recommended.rules,
-
       "import/no-unresolved": "error",
       "import/no-duplicates": "warn",
 
       "no-implicit-globals": "off",
+      "no-empty-pattern": "off",
 
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/ban-ts-comment": "off",

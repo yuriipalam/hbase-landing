@@ -1,6 +1,5 @@
 import {
   ChartNoAxesCombined,
-  Crosshair,
   Dna,
   Radio,
   ScrollText,

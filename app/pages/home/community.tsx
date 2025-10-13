@@ -1,5 +1,5 @@
 import { Button } from "@/ui/button";
-import { ArrowUpRight, MoveUpRight, SquareArrowOutUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export function CommunitySection() {
   return (
