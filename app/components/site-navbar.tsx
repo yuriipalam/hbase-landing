@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Button } from "@/ui/button";
 import {
   DropdownMenu,
@@ -10,13 +11,37 @@ import {
   DropdownMenuTrigger
 } from "@/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const navLinkClass =
   "text-sm font-medium text-foreground/70 hover:text-foreground transition-colors";
 
 export function SiteNavbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    document.addEventListener("scroll", handleScroll);
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="border-border/60 bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+    <header
+      className={cn(
+        isScrolled ? "border-border/60" : "border-border/0",
+        "bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur transition-[border] duration-200"
+      )}
+    >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <a href="/" className="flex items-center gap-3" aria-label="HBase Home">
           <img

@@ -3,7 +3,7 @@ import { Button } from "@/ui/button";
 export function Hero() {
   return (
     <section>
-      <div className="mx-auto max-w-5xl px-4 py-16 md:py-24">
+      <div className="mx-auto max-w-5xl px-4 pt-32 pb-16 md:pt-48 md:pb-20">
         <div className="flex flex-col items-center text-center">
           <img
             src="/images/big-logo.png"

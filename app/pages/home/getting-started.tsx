@@ -52,7 +52,7 @@ export function GettingStartedSection() {
             </div>
           ))}
         </div>
-        <div className="mt-8 flex justify-center">
+        {/* <div className="mt-8 flex justify-center">
           <Button
             asChild
             size="lg"
@@ -60,7 +60,7 @@ export function GettingStartedSection() {
           >
             <a href="#download">Download HBase</a>
           </Button>
-        </div>
+        </div> */}
       </div>
     </section>
   );
