@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +11,8 @@ import {
 } from "@/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { asfLinks, documentationLinks, projectLinks } from "./links";
 
 const navLinkClass =
   "text-sm font-medium text-foreground/70 hover:text-foreground transition-colors";
@@ -62,51 +63,29 @@ export function SiteNavbar() {
 
         {/* Mobile menus */}
         <div className="flex items-center gap-1 md:hidden">
-          <ProjectMenu compact />
-          <DocsMenu compact />
-          <AsfMenu compact />
+          <ProjectMenu />
+          <DocsMenu />
+          <AsfMenu />
         </div>
       </nav>
     </header>
   );
 }
 
-function ProjectMenu({ compact = false }: { compact?: boolean }) {
-  const trigger = compact ? (
-    <Button variant="ghost" size="sm" className="px-2">
-      <span className="sr-only">Project</span>
-      <span aria-hidden>Project</span>
-      <ChevronDown className="ml-1 h-4 w-4" />
-    </Button>
-  ) : (
-    <button
-      className={`${navLinkClass} inline-flex cursor-pointer items-center`}
-    >
-      Project <ChevronDown className="ml-1 h-4 w-4" />
-    </button>
-  );
-
-  const items = [
-    "Overview",
-    "License",
-    "Downloads",
-    "Release Notes",
-    "Code of Conduct",
-    "Mailing Lists",
-    "Team",
-    "HBase Sponsors",
-    "Thanks",
-    "Powered by HBase",
-    "Other Resources"
-  ];
-
+function ProjectMenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        {items.map((item) => (
-          <DropdownMenuItem key={item} asChild>
-            <a href="/">{item}</a>
+      <DropdownMenuTrigger asChild>
+        <button
+          className={`${navLinkClass} inline-flex cursor-pointer items-center`}
+        >
+          Apache HBase Project <ChevronDown className="ml-1 h-4 w-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center">
+        {projectLinks.map((item) => (
+          <DropdownMenuItem key={item.label} asChild>
+            <Link to={item.to}>{item.label}</Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -114,84 +93,106 @@ function ProjectMenu({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function DocsMenu({ compact = false }: { compact?: boolean }) {
-  const trigger = compact ? (
-    <Button variant="ghost" size="sm" className="px-2">
-      <span className="sr-only">Documentation and API</span>
-      <span aria-hidden>Docs</span>
-      <ChevronDown className="ml-1 h-4 w-4" />
-    </Button>
-  ) : (
-    <button
-      className={`${navLinkClass} inline-flex cursor-pointer items-center`}
-    >
-      Documentation and API <ChevronDown className="ml-1 h-4 w-4" />
-    </button>
-  );
+function DocsMenu() {
+  type DocumentationOptions =
+    | "ref"
+    | "refPdf"
+    | "userApi"
+    | "userApiTest"
+    | "devApi"
+    | "devApiTest";
 
-  const baseDocs = [
-    "Reference Guide",
-    "Reference Guide (PDF)",
-    "Getting Started",
-    "User API"
-  ];
+  const documentationOptionLabels: Record<DocumentationOptions, string> = {
+    ref: "Reference Guide",
+    refPdf: "Reference Guide (PDF)",
+    userApi: "User API",
+    userApiTest: "User API (Test)",
+    devApi: "Developer API",
+    devApiTest: "Developer API (Test)"
+  };
+
+  const getDocsURL = (version: string, option: DocumentationOptions) => {
+    const baseUrl = "https://hbase.apache.org/";
+    switch (option) {
+      case "ref":
+        return `${baseUrl}${version}/book.html`;
+      case "refPdf":
+        return `${baseUrl}${version}/book.pdf`;
+      case "userApi":
+        return `${baseUrl}${version}/apidocs/index.html`;
+      case "userApiTest":
+        return `${baseUrl}${version}/testapidocs/index.html`;
+      case "devApi":
+        return `${baseUrl}${version}/devapidocs/index.html`;
+      case "devApiTest":
+        return `${baseUrl}${version}/testdevapidocs/index.html`;
+    }
+  };
+
+  const docItems: Record<string, DocumentationOptions[]> = {
+    "1.4": ["ref", "refPdf", "userApi", "userApiTest"],
+    "2.3": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
+    "2.4": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
+    "2.5": ["userApi", "userApiTest", "devApi", "devApiTest"],
+    "2.6": ["userApi", "userApiTest", "devApi", "devApiTest"]
+  };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent>
-        {baseDocs.map((item) => (
-          <DropdownMenuItem key={item} asChild>
-            <a href="#documentation" aria-label={item}>
-              {item}
-            </a>
+      <DropdownMenuTrigger asChild>
+        <button
+          className={`${navLinkClass} inline-flex cursor-pointer items-center`}
+        >
+          Documentation and API <ChevronDown className="ml-1 h-4 w-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center">
+        {documentationLinks.map((item) => (
+          <DropdownMenuItem key={item.label} asChild>
+            <Link to={item.to} aria-label={item.label}>
+              {item.label}
+            </Link>
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>2.6 Documentation</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            {baseDocs.map((item) => (
-              <DropdownMenuItem key={`2.6-${item}`} asChild>
-                <a href="#documentation" aria-label={`2.6 ${item}`}>
-                  {item}
-                </a>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        {Object.keys(docItems).map((version) => (
+          <DropdownMenuSub key={version}>
+            <DropdownMenuSubTrigger>
+              {version} Documentation
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              {docItems[version].map((item) => (
+                <DropdownMenuItem key={item} asChild>
+                  <Link
+                    to={getDocsURL(version, item)}
+                    aria-label={documentationOptionLabels[item]}
+                  >
+                    {documentationOptionLabels[item]}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-function AsfMenu({ compact = false }: { compact?: boolean }) {
-  const trigger = compact ? (
-    <Button variant="ghost" size="sm" className="cursor-pointer px-2">
-      <span className="sr-only">ASF</span>
-      <span aria-hidden>ASF</span>
-      <ChevronDown className="ml-1 h-4 w-4" />
-    </Button>
-  ) : (
-    <button className={`${navLinkClass} inline-flex cursor-pointer`}>
-      ASF <ChevronDown className="ml-1 h-4 w-4" />
-    </button>
-  );
-
-  const items = [
-    "Apache Software Foundation",
-    "How Apache Works",
-    "Sponsoring Apache",
-    "Privacy Policy"
-  ];
-
+function AsfMenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {items.map((item) => (
-          <DropdownMenuItem key={item} asChild>
-            <a href="/">{item}</a>
+      <DropdownMenuTrigger asChild>
+        <button className={`${navLinkClass} inline-flex cursor-pointer`}>
+          ASF <ChevronDown className="ml-1 h-4 w-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center">
+        {asfLinks.map((item) => (
+          <DropdownMenuItem key={item.label} asChild>
+            <Link to={item.to} aria-label={item.label}>
+              {item.label}
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

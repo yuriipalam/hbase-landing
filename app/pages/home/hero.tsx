@@ -1,4 +1,5 @@
 import { Button } from "@/ui/button";
+import { Link } from "react-router";
 
 export function Hero() {
   return (
@@ -22,12 +23,13 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            {/* Use default variant which is brand red; hover stays brand red via button.tsx */}
             <Button asChild size="lg">
-              <a href="#download">Download HBase</a>
+              <Link to="/downloads">Download HBase</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="#documentation">Read Documentation</a>
+              <Link to="https://hbase.apache.org/book.html">
+                Read Documentation
+              </Link>
             </Button>
           </div>
         </div>

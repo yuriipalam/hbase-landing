@@ -24,7 +24,7 @@ function DropdownMenuTrigger({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
   return (
     <DropdownMenuPrimitive.Trigger
-      className={cn("focus-visible:ring-0", className)}
+      className={cn("outline-0", className)}
       data-slot="dropdown-menu-trigger"
       {...props}
     />

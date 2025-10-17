@@ -1,8 +1,29 @@
+import { projectLinks, documentationLinks, asfLinks } from "./links";
+
+function ExternalIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="ml-1 inline-block h-3 w-3"
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className="border-border/60 mt-16">
       <div className="text-muted-foreground mx-auto max-w-6xl px-4 py-10 text-sm">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-4">
           <div>
             <p className="text-foreground font-medium">Apache HBase</p>
             <p className="mt-2">
@@ -11,43 +32,51 @@ export function SiteFooter() {
             </p>
           </div>
           <div>
-            <p className="text-foreground font-medium">Get Started</p>
+            <p className="text-foreground font-medium">Project</p>
             <ul className="mt-2 space-y-1">
-              <li>
-                <a href="#download" className="hover:text-foreground">
-                  Download
-                </a>
-              </li>
-              <li>
-                <a href="#documentation" className="hover:text-foreground">
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-foreground">
-                  Features
-                </a>
-              </li>
+              {projectLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.to}
+                    className="hover:text-foreground inline-flex items-center"
+                  >
+                    {link.label}
+                    {link.external && <ExternalIcon />}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <p className="text-foreground font-medium">Community</p>
+            <p className="text-foreground font-medium">Documentation</p>
             <ul className="mt-2 space-y-1">
-              <li>
-                <a href="/" className="hover:text-foreground">
-                  Mailing Lists
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-foreground">
-                  Sponsors
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-foreground">
-                  Security
-                </a>
-              </li>
+              {documentationLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.to}
+                    className="hover:text-foreground inline-flex items-center"
+                  >
+                    {link.label}
+                    {link.external && <ExternalIcon />}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-foreground font-medium">ASF</p>
+            <ul className="mt-2 space-y-1">
+              {asfLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.to}
+                    className="hover:text-foreground inline-flex items-center"
+                  >
+                    {link.label}
+                    {link.external && <ExternalIcon />}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
