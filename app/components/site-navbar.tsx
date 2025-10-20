@@ -9,10 +9,23 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "@/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "@/ui/collapsible";
+import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router";
-import { asfLinks, documentationLinks, projectLinks } from "./links";
+import {
+  asfLinks,
+  documentationLinks,
+  projectLinks,
+  documentationOptionLabels,
+  getDocsURL,
+  docsItems
+} from "./links";
 
 const navLinkClass =
   "text-sm font-medium text-foreground/70 hover:text-foreground transition-colors";
@@ -41,13 +54,13 @@ export function SiteNavbar() {
     <header
       className={cn(
         isScrolled ? "border-border/60" : "border-border/0",
-        "bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur transition-[border] duration-200"
+        "bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur transition-[border] duration-200"
       )}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link
           to="/"
-          className="flex items-center gap-3"
+          className="relative z-50 flex items-center gap-3"
           aria-label="HBase Home"
         >
           <img
@@ -66,11 +79,9 @@ export function SiteNavbar() {
           <AsfMenu />
         </div>
 
-        {/* Mobile menus */}
-        <div className="flex items-center gap-1 md:hidden">
-          <ProjectMenu />
-          <DocsMenu />
-          <AsfMenu />
+        {/* Mobile menu */}
+        <div className="md:hidden">
+          <MobileMenu />
         </div>
       </nav>
     </header>
@@ -101,49 +112,6 @@ function ProjectMenu() {
 }
 
 function DocsMenu() {
-  type DocumentationOptions =
-    | "ref"
-    | "refPdf"
-    | "userApi"
-    | "userApiTest"
-    | "devApi"
-    | "devApiTest";
-
-  const documentationOptionLabels: Record<DocumentationOptions, string> = {
-    ref: "Reference Guide",
-    refPdf: "Reference Guide (PDF)",
-    userApi: "User API",
-    userApiTest: "User API (Test)",
-    devApi: "Developer API",
-    devApiTest: "Developer API (Test)"
-  };
-
-  const getDocsURL = (version: string, option: DocumentationOptions) => {
-    const baseUrl = "https://hbase.apache.org/";
-    switch (option) {
-      case "ref":
-        return `${baseUrl}${version}/book.html`;
-      case "refPdf":
-        return `${baseUrl}${version}/book.pdf`;
-      case "userApi":
-        return `${baseUrl}${version}/apidocs/index.html`;
-      case "userApiTest":
-        return `${baseUrl}${version}/testapidocs/index.html`;
-      case "devApi":
-        return `${baseUrl}${version}/devapidocs/index.html`;
-      case "devApiTest":
-        return `${baseUrl}${version}/testdevapidocs/index.html`;
-    }
-  };
-
-  const docItems: Record<string, DocumentationOptions[]> = {
-    "1.4": ["ref", "refPdf", "userApi", "userApiTest"],
-    "2.3": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
-    "2.4": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
-    "2.5": ["userApi", "userApiTest", "devApi", "devApiTest"],
-    "2.6": ["userApi", "userApiTest", "devApi", "devApiTest"]
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -166,13 +134,13 @@ function DocsMenu() {
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        {Object.keys(docItems).map((version) => (
+        {Object.keys(docsItems).map((version) => (
           <DropdownMenuSub key={version}>
             <DropdownMenuSubTrigger>
               {version} Documentation
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              {docItems[version].map((item) => (
+              {docsItems[version].map((item) => (
                 <DropdownMenuItem key={item} asChild>
                   <Link
                     to={getDocsURL(version, item)}
@@ -212,5 +180,208 @@ function AsfMenu() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function MobileMenu() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if (e.matches && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    handleMediaChange(mediaQuery);
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, [isOpen]);
+
+  return (
+    <>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="text-foreground relative z-50 p-2"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+      >
+        <div className="flex h-5 w-5 flex-col items-center justify-center">
+          <span
+            className={cn(
+              "bg-foreground absolute h-0.5 w-5 transition-all duration-300",
+              isOpen ? "rotate-45" : "-translate-y-1.5"
+            )}
+          />
+          <span
+            className={cn(
+              "bg-foreground h-0.5 w-5 transition-all duration-300",
+              isOpen ? "opacity-0" : "opacity-100"
+            )}
+          />
+          <span
+            className={cn(
+              "bg-foreground absolute h-0.5 w-5 transition-all duration-300",
+              isOpen ? "-rotate-45" : "translate-y-1.5"
+            )}
+          />
+        </div>
+      </button>
+
+      {/* Fullscreen overlay - rendered in portal */}
+      {isMounted &&
+        createPortal(
+          <div
+            className={cn(
+              "bg-background fixed inset-0 z-40 overflow-y-auto transition-all duration-300",
+              isOpen
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0"
+            )}
+          >
+            <div className="px-6 pt-24 pb-8">
+              <nav className="space-y-4">
+                <MobileMenuSection
+                  title="Apache HBase Project"
+                  links={projectLinks}
+                  onLinkClick={() => setIsOpen(false)}
+                />
+                <MobileDocsSection onLinkClick={() => setIsOpen(false)} />
+                <MobileMenuSection
+                  title="ASF"
+                  links={asfLinks}
+                  onLinkClick={() => setIsOpen(false)}
+                />
+              </nav>
+            </div>
+          </div>,
+          document.body
+        )}
+    </>
+  );
+}
+
+function MobileDocsSection({ onLinkClick }: { onLinkClick: () => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <CollapsibleTrigger className="flex w-full items-center justify-between py-2 text-left font-medium">
+        Documentation and API
+        <ChevronRight
+          className={cn("h-4 w-4 transition-transform", isOpen && "rotate-90")}
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="w-full space-y-2 pl-4">
+        {documentationLinks.map((link) => (
+          <Link
+            key={link.label}
+            to={link.to}
+            target={link.external ? "_blank" : "_self"}
+            onClick={onLinkClick}
+            className="text-muted-foreground hover:text-foreground flex items-center py-1.5 text-sm"
+          >
+            {link.label}
+            {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
+          </Link>
+        ))}
+        <div className="border-border/40 my-2 border-t pt-2">
+          {Object.keys(docsItems).map((version) => (
+            <Collapsible
+              key={version}
+              open={isOpen}
+              onOpenChange={setIsOpen}
+              className="w-full"
+            >
+              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground flex w-full items-center justify-between py-1.5 text-left text-sm">
+                {version} Documentation
+                <ChevronRight
+                  className={cn(
+                    "h-3 w-3 transition-transform",
+                    isOpen && "rotate-90"
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="w-full space-y-1 pl-3">
+                {docsItems[version].map((item) => (
+                  <Link
+                    key={item}
+                    to={getDocsURL(version, item)}
+                    onClick={onLinkClick}
+                    className="text-muted-foreground hover:text-foreground flex items-center py-1 text-xs"
+                  >
+                    {documentationOptionLabels[item]}
+                  </Link>
+                ))}
+              </CollapsibleContent>
+            </Collapsible>
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
+function MobileMenuSection({
+  title,
+  links,
+  onLinkClick
+}: {
+  title: string;
+  links: typeof projectLinks;
+  onLinkClick: () => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <CollapsibleTrigger className="flex w-full items-center justify-between py-2 text-left font-medium">
+        {title}
+        <ChevronRight
+          className={cn("h-4 w-4 transition-transform", isOpen && "rotate-90")}
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="w-full space-y-2 pl-4">
+        {links.map((link) => (
+          <Link
+            key={link.label}
+            to={link.to}
+            target={link.external ? "_blank" : "_self"}
+            onClick={onLinkClick}
+            className="text-muted-foreground hover:text-foreground flex items-center py-1.5 text-sm"
+          >
+            {link.label}
+            {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
+          </Link>
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
