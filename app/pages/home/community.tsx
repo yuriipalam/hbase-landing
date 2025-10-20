@@ -1,10 +1,11 @@
 import { Button } from "@/ui/button";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router";
 
 export function CommunitySection() {
   return (
     <section id="community">
-      <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
           <div>
             <h2 className="text-3xl font-semibold tracking-tight">
@@ -26,7 +27,7 @@ export function CommunitySection() {
                 <a href="/">Contribute</a>
               </Button>
               <Button asChild variant="ghost">
-                <a href="/">Code of Conduct</a>
+                <Link to="/code-of-conduct">Code of Conduct</Link>
               </Button>
             </div>
           </div>

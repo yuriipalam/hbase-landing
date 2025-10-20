@@ -22,8 +22,8 @@ function ExternalIcon() {
 
 export function SiteFooter() {
   return (
-    <footer className="border-border/60 mt-16">
-      <div className="text-muted-foreground mx-auto max-w-6xl px-4 py-10 text-sm">
+    <footer className="container mx-auto">
+      <div className="border-border/60 text-muted-foreground px-4 pt-12 pb-8 text-sm md:pt-16 md:pb-10">
         <div className="grid gap-6 md:grid-cols-4">
           <div>
             <p className="text-foreground font-medium">Apache HBase</p>

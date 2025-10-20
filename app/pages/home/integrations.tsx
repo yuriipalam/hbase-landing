@@ -16,7 +16,7 @@ export function IntegrationsSection() {
   return (
     <section
       id="integrations"
-      className="mx-auto max-w-6xl px-4 py-12 md:py-16"
+      className="container mx-auto px-4 py-12 md:py-16"
     >
       <div className="mb-8 text-center">
         <h2 className="text-3xl font-semibold tracking-tight">

@@ -42,7 +42,7 @@ export function UseCasesSection() {
   ];
   return (
     <section id="use-cases" className="border-border/60 bg-muted/30 border-y">
-      <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
             Use Cases

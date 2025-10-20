@@ -4,7 +4,7 @@ import { Link } from "react-router";
 export function Hero() {
   return (
     <section>
-      <div className="mx-auto max-w-5xl px-4 pt-32 pb-16 md:pt-48 md:pb-20">
+      <div className="container mx-auto px-4 pt-32 pb-16 md:pt-48 md:pb-20">
         <div className="flex flex-col items-center text-center">
           <img
             src="/images/big-logo.png"
