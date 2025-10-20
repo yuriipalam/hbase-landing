@@ -1,4 +1,5 @@
 import { Button } from "@/ui/button";
+import { Link } from "react-router";
 
 export function GettingStartedSection() {
   const steps = [
@@ -46,7 +47,7 @@ export function GettingStartedSection() {
               </p>
               <div className="mt-auto">
                 <Button asChild size="sm" variant="link" className="p-0">
-                  <a href={s.href}>Learn more →</a>
+                  <Link to={s.href}>Learn more →</Link>
                 </Button>
               </div>
             </div>

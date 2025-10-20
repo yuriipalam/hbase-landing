@@ -1,4 +1,6 @@
-## Code of Conduct Policy
+# Code of Conduct Policy
+
+## Policy
 
 We expect participants in discussions on the HBase project mailing lists, IRC channels, and JIRA issues to abide by the Apache Software Foundation's [Code of Conduct](http://apache.org/foundation/policies/conduct.html).
 
