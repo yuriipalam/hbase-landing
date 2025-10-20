@@ -54,7 +54,7 @@ export function MarkdownLayout({
               </h3>
             ),
             p: ({ children }) => (
-              <p className="mb-6 text-base leading-7">{children}</p>
+              <p className="mb-4 text-base leading-7">{children}</p>
             ),
             a: ({ href, children }) => {
               const isExternal = href?.startsWith("http");
@@ -77,10 +77,10 @@ export function MarkdownLayout({
               );
             },
             ol: ({ children }) => (
-              <ol className="mb-6 ml-6 list-decimal space-y-2">{children}</ol>
+              <ol className="mb-4 ml-6 list-decimal space-y-2">{children}</ol>
             ),
             ul: ({ children }) => (
-              <ul className="mb-6 ml-6 list-disc space-y-2">{children}</ul>
+              <ul className="mb-4 ml-6 list-disc space-y-2">{children}</ul>
             ),
             li: ({ children }) => <li className="leading-7">{children}</li>,
             // Keep code/pre lean so highlight.js classes (`hljs ...`) can style properly
@@ -94,13 +94,15 @@ export function MarkdownLayout({
                 );
               }
               return (
-                <code className={`${className} block font-mono text-sm`}>
+                <code
+                  className={`${className} block rounded font-mono text-sm`}
+                >
                   {children}
                 </code>
               );
             },
             pre: ({ children }) => (
-              <pre className="bg-muted mb-6 overflow-x-auto rounded-lg p-4">
+              <pre className="bg-muted mb-4 overflow-x-auto rounded-lg p-4">
                 {children}
               </pre>
             ),

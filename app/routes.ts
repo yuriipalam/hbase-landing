@@ -7,5 +7,8 @@ export default [
   route("mailing-lists", "routes/mailing-lists.tsx"),
   route("team", "routes/team.tsx"),
   route("sponsors", "routes/sponsors.tsx"),
-  route("powered-by-hbase", "routes/powered-by-hbase.tsx")
+  route("powered-by-hbase", "routes/powered-by-hbase.tsx"),
+  route("other-resources", "routes/other-resources.tsx"),
+  route("source-repository", "routes/source-repository.tsx"),
+  route("acid-semantics", "routes/acid-semantics.tsx")
 ] satisfies RouteConfig;
