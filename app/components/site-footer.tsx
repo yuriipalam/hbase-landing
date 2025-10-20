@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { projectLinks, documentationLinks, asfLinks } from "./links";
 
 function ExternalIcon() {
@@ -36,13 +37,14 @@ export function SiteFooter() {
             <ul className="mt-2 space-y-1">
               {projectLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.to}
+                  <Link
+                    to={link.to}
+                    target={link.external ? "_blank" : "_self"}
                     className="hover:text-foreground inline-flex items-center"
                   >
                     {link.label}
                     {link.external && <ExternalIcon />}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -52,13 +54,14 @@ export function SiteFooter() {
             <ul className="mt-2 space-y-1">
               {documentationLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.to}
+                  <Link
+                    to={link.to}
+                    target={link.external ? "_blank" : "_self"}
                     className="hover:text-foreground inline-flex items-center"
                   >
                     {link.label}
                     {link.external && <ExternalIcon />}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -68,13 +71,14 @@ export function SiteFooter() {
             <ul className="mt-2 space-y-1">
               {asfLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.to}
+                  <Link
+                    to={link.to}
+                    target={link.external ? "_blank" : "_self"}
                     className="hover:text-foreground inline-flex items-center"
                   >
                     {link.label}
                     {link.external && <ExternalIcon />}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

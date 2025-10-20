@@ -25,6 +25,7 @@ export function SiteNavbar() {
       return;
     }
 
+    setIsScrolled(window.scrollY > 0);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
@@ -44,7 +45,11 @@ export function SiteNavbar() {
       )}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <a href="/" className="flex items-center gap-3" aria-label="HBase Home">
+        <Link
+          to="/"
+          className="flex items-center gap-3"
+          aria-label="HBase Home"
+        >
           <img
             src="/images/logo.png"
             alt="Apache HBase logo"
@@ -52,7 +57,7 @@ export function SiteNavbar() {
             height={28}
           />
           <span className="sr-only">Apache HBase</span>
-        </a>
+        </Link>
 
         {/* Desktop menus */}
         <div className="hidden items-center gap-4 md:flex">
@@ -85,7 +90,9 @@ function ProjectMenu() {
       <DropdownMenuContent align="center">
         {projectLinks.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
-            <Link to={item.to}>{item.label}</Link>
+            <Link to={item.to} target={item.external ? "_blank" : "_self"}>
+              {item.label}
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -149,7 +156,11 @@ function DocsMenu() {
       <DropdownMenuContent align="center">
         {documentationLinks.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
-            <Link to={item.to} aria-label={item.label}>
+            <Link
+              to={item.to}
+              target={item.external ? "_blank" : "_self"}
+              aria-label={item.label}
+            >
               {item.label}
             </Link>
           </DropdownMenuItem>
@@ -190,7 +201,11 @@ function AsfMenu() {
       <DropdownMenuContent align="center">
         {asfLinks.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
-            <Link to={item.to} aria-label={item.label}>
+            <Link
+              to={item.to}
+              target={item.external ? "_blank" : "_self"}
+              aria-label={item.label}
+            >
               {item.label}
             </Link>
           </DropdownMenuItem>
