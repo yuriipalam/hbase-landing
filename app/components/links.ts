@@ -47,7 +47,7 @@ export const projectLinks: Link[] = [
   },
   {
     label: "Powered by HBase",
-    to: "/Powered by HBase"
+    to: "/powered-by-hbase"
   },
   {
     label: "Other Resources",

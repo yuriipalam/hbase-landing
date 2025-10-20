@@ -47,8 +47,8 @@ export function CommunitySection() {
               </a>
             </li>
             <li id="sponsors" className="relative p-0">
-              <a
-                href="#sponsors"
+              <Link
+                to="/sponsors"
                 className="border-border/60 bg-background hover:border-primary focus-visible:ring-primary block rounded-lg border p-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 <span className="text-foreground font-medium">Sponsors</span>
@@ -56,7 +56,7 @@ export function CommunitySection() {
                   Thanks to organizations supporting the project.
                 </p>
                 <ArrowUpRight className="text-muted-foreground absolute top-2.5 right-2.5 size-4" />
-              </a>
+              </Link>
             </li>
             <li id="security" className="relative p-0">
               <a

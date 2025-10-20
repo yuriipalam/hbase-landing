@@ -49,7 +49,7 @@ export function MarkdownLayout({
               </h2>
             ),
             h3: ({ children }) => (
-              <h3 className="mt-8 mb-3 scroll-mt-28 text-lg font-semibold tracking-tight">
+              <h3 className="mt-8 mb-1 scroll-mt-28 text-xl font-semibold tracking-tight">
                 {children}
               </h3>
             ),
