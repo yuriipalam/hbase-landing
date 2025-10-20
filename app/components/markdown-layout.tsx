@@ -1,22 +1,25 @@
-import Markdown from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 import { Link } from "react-router";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
+import rehypeRaw from "rehype-raw";
 
 interface MarkdownLayoutProps {
   children: string;
-  autoLinkHeadings?: boolean; // default false
-  highlight?: boolean; // default true
+  autoLinkHeadings?: boolean;
+  highlight?: boolean;
+  components?: Components;
 }
 
 export function MarkdownLayout({
   children,
   autoLinkHeadings = false,
-  highlight = true
+  highlight = true,
+  components: customComponents
 }: MarkdownLayoutProps) {
-  const rehypePlugins: any[] = [];
+  const rehypePlugins: any[] = [rehypeRaw];
   if (autoLinkHeadings) {
     rehypePlugins.push(rehypeSlug, [
       rehypeAutolinkHeadings,
@@ -24,7 +27,7 @@ export function MarkdownLayout({
     ]);
   }
   if (highlight) {
-    // ignoreMissing avoids errors if someone writes `language-xyz` you don’t ship
+    // ignoreMissing avoids errors if someone writes `language-xyz` you don't ship
     rehypePlugins.push([rehypeHighlight, { ignoreMissing: true }]);
   }
 
@@ -36,7 +39,7 @@ export function MarkdownLayout({
           rehypePlugins={rehypePlugins}
           components={{
             h1: ({ children }) => (
-              <h1 className="mt-12 mb-20 text-center text-4xl font-semibold tracking-tight text-balance md:text-6xl">
+              <h1 className="my-12 text-center text-4xl font-semibold tracking-tight text-balance md:text-6xl">
                 {children}
               </h1>
             ),
@@ -115,10 +118,28 @@ export function MarkdownLayout({
               />
             ),
             table: ({ children }) => (
-              <div className="my-6 overflow-x-auto rounded-lg border">
-                <table className="min-w-full">{children}</table>
+              <div className="border-border my-8 w-full overflow-x-auto rounded-lg border">
+                <table className="w-full border-collapse text-sm">
+                  {children}
+                </table>
               </div>
-            )
+            ),
+            thead: ({ children }) => (
+              <thead className="bg-muted">{children}</thead>
+            ),
+            tbody: ({ children }) => <tbody>{children}</tbody>,
+            tr: ({ children }) => (
+              <tr className="border-border hover:bg-muted/50 border-b transition-colors">
+                {children}
+              </tr>
+            ),
+            th: ({ children }) => (
+              <th className="px-4 py-3 text-left font-semibold">{children}</th>
+            ),
+            td: ({ children }) => (
+              <td className="px-4 py-3 align-top">{children}</td>
+            ),
+            ...customComponents
           }}
         >
           {children}

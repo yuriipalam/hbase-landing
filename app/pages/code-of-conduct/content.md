@@ -1,4 +1,4 @@
-# Code of Conduct Policy
+# Code of Conduct
 
 ## Policy
 

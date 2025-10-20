@@ -6,17 +6,17 @@ export function GettingStartedSection() {
     {
       title: "1. Download",
       desc: "Grab the latest stable release and verify checksums.",
-      href: "#download"
+      to: "/downloads"
     },
     {
       title: "2. Read the Guide",
       desc: "Walk through cluster setup, schema design, and operations.",
-      href: "#documentation"
+      to: "#documentation"
     },
     {
       title: "3. Connect a Client",
       desc: "Use the Java API, REST, or Thrift to start building.",
-      href: "#documentation"
+      to: "#documentation"
     }
   ];
   return (
@@ -47,7 +47,7 @@ export function GettingStartedSection() {
               </p>
               <div className="mt-auto">
                 <Button asChild size="sm" variant="link" className="p-0">
-                  <Link to={s.href}>Learn more →</Link>
+                  <Link to={s.to}>Learn more →</Link>
                 </Button>
               </div>
             </div>
