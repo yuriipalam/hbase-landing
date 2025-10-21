@@ -21,10 +21,12 @@ export function CommunitySection() {
                 asChild
                 className="bg-primary text-white hover:opacity-90"
               >
-                <a href="/">Mailing Lists</a>
+                <Link to="/mailing-lists">Mailing Lists</Link>
               </Button>
               <Button asChild variant="outline">
-                <a href="/">Contribute</a>
+                <Link to="https://github.com/apache/hbase" target="_blank">
+                  Contribute
+                </Link>
               </Button>
               <Button asChild variant="ghost">
                 <Link to="/code-of-conduct">Code of Conduct</Link>
@@ -59,8 +61,8 @@ export function CommunitySection() {
               </Link>
             </li>
             <li id="security" className="relative p-0">
-              <a
-                href="#security"
+              <Link
+                to="https://hbase.apache.org/book.html#security"
                 className="border-border/60 bg-background hover:border-primary focus-visible:ring-primary block rounded-lg border p-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 <span className="text-foreground font-medium">Security</span>
@@ -68,7 +70,7 @@ export function CommunitySection() {
                   See the Reference Guide security chapter.
                 </p>
                 <ArrowUpRight className="text-muted-foreground absolute top-2.5 right-2.5 size-4" />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

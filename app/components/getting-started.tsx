@@ -11,12 +11,12 @@ export function GettingStartedSection() {
     {
       title: "2. Read the Guide",
       desc: "Walk through cluster setup, schema design, and operations.",
-      to: "#documentation"
+      to: "https://hbase.apache.org/book.html#_get_started_with_hbase"
     },
     {
       title: "3. Connect a Client",
       desc: "Use the Java API, REST, or Thrift to start building.",
-      to: "#documentation"
+      to: "https://hbase.apache.org/book.html#config.files"
     }
   ];
   return (

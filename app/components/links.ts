@@ -11,7 +11,8 @@ export const projectLinks: Link[] = [
   },
   {
     label: "License",
-    to: "https://www.apache.org/licenses/"
+    to: "https://www.apache.org/licenses/",
+    external: true
   },
   {
     label: "Downloads",
@@ -19,11 +20,13 @@ export const projectLinks: Link[] = [
   },
   {
     label: "Release Notes",
-    to: "https://issues.apache.org/jira/browse/HBASE?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel"
+    to: "https://issues.apache.org/jira/browse/HBASE?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel",
+    external: true
   },
   {
     label: "Issue Tracking",
-    to: "https://issues.apache.org/jira/browse/HBASE"
+    to: "https://issues.apache.org/jira/browse/HBASE",
+    external: true
   },
   {
     label: "Code of Conduct",
@@ -43,7 +46,8 @@ export const projectLinks: Link[] = [
   },
   {
     label: "Thanks",
-    to: "https://www.apache.org/foundation/sponsors"
+    to: "https://www.apache.org/foundation/sponsors",
+    external: true
   },
   {
     label: "Powered by HBase",

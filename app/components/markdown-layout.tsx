@@ -5,6 +5,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
+import { ExternalLinkIcon } from "lucide-react";
 
 interface MarkdownLayoutProps {
   children: string;
@@ -57,15 +58,19 @@ export function MarkdownLayout({
               <p className="mb-4 text-base leading-7">{children}</p>
             ),
             a: ({ href, children }) => {
-              const isExternal = href?.startsWith("http");
+              const isExternal =
+                href?.startsWith("http") &&
+                !href?.startsWith("https://hbase.apache.org/");
               return isExternal ? (
                 <a
                   href={href ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary underline-offset-4 hover:underline"
+                  className="text-primary inline underline-offset-4 hover:underline"
                 >
                   {children}
+                  {"\u00A0"}
+                  <ExternalLinkIcon className="inline size-3.5 align-[-2px]" />
                 </a>
               ) : (
                 <Link
