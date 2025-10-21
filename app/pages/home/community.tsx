@@ -17,10 +17,7 @@ export function CommunitySection() {
               guide, and help shape the roadmap.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button
-                asChild
-                className="bg-primary text-white hover:opacity-90"
-              >
+              <Button asChild>
                 <Link to="/mailing-lists">Mailing Lists</Link>
               </Button>
               <Button asChild variant="outline">
