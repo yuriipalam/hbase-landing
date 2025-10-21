@@ -12,6 +12,7 @@ import "./app.css";
 import { SiteFooter } from "./components/site-footer";
 import { SiteNavbar } from "./components/site-navbar";
 import { GettingStartedSection } from "./components/getting-started";
+import { ThemeProvider } from "./lib/theme-provider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -34,16 +35,37 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                const root = document.documentElement;
+                root.classList.remove('light', 'dark');
+                
+                if (theme && ['light', 'dark'].includes(theme)) {
+                  root.classList.add(theme);
+                } else {
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  root.classList.add(systemTheme);
+                  localStorage.setItem('theme', systemTheme);
+                }
+              })();
+            `
+          }}
+        />
       </head>
       <body>
-        <SiteNavbar />
+        <ThemeProvider defaultTheme="light">
+          <SiteNavbar />
 
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+          {children}
+          <ScrollRestoration />
+          <Scripts />
 
-        <GettingStartedSection />
-        <SiteFooter />
+          <GettingStartedSection />
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   );

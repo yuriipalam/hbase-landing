@@ -26,6 +26,7 @@ import {
   getDocsURL,
   docsItems
 } from "./links";
+import { ThemeToggle } from "./theme-toggle";
 
 const navLinkClass =
   "text-sm font-medium text-foreground/70 hover:text-foreground transition-colors";
@@ -77,10 +78,12 @@ export function SiteNavbar() {
           <ProjectMenu />
           <DocsMenu />
           <AsfMenu />
+          <ThemeToggle />
         </div>
 
         {/* Mobile menu */}
-        <div className="md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           <MobileMenu />
         </div>
       </nav>

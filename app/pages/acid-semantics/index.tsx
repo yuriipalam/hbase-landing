@@ -4,4 +4,3 @@ import content from "./content.md?raw";
 export function AcidSemanticsPage() {
   return <MarkdownLayout>{content}</MarkdownLayout>;
 }
-
