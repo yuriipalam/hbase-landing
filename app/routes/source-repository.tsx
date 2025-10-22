@@ -3,10 +3,10 @@ import { SourceRepositoryPage } from "@/pages/source-repository";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Source Repository - HBase Project" },
-    { 
-      name: "description", 
-      content: "Access the Apache HBase source code repository." 
+    { title: "Source Repository - Apache HBase" },
+    {
+      name: "description",
+      content: "Access the Apache HBase source code repository."
     }
   ];
 }
@@ -14,4 +14,3 @@ export function meta({}: Route.MetaArgs) {
 export default function SourceRepository() {
   return <SourceRepositoryPage />;
 }
-

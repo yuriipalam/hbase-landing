@@ -3,10 +3,11 @@ import { SponsorsPage } from "@/pages/sponsors";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Sponsors - HBase Project" },
-    { 
-      name: "description", 
-      content: "Companies and organizations that sponsor the Apache HBase project with tools and resources." 
+    { title: "Sponsors - Apache HBase" },
+    {
+      name: "description",
+      content:
+        "Companies and organizations that sponsor the Apache HBase project with tools and resources."
     }
   ];
 }
@@ -14,4 +15,3 @@ export function meta({}: Route.MetaArgs) {
 export default function Sponsors() {
   return <SponsorsPage />;
 }
-

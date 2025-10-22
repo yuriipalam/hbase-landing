@@ -3,10 +3,11 @@ import { PoweredByHBasePage } from "@/pages/powered-by-hbase";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Powered by HBase - HBase Project" },
-    { 
-      name: "description", 
-      content: "Companies and organizations using Apache HBase in production for their data storage and processing needs." 
+    { title: "Powered by HBase - Apache HBase" },
+    {
+      name: "description",
+      content:
+        "Companies and organizations using Apache HBase in production for their data storage and processing needs."
     }
   ];
 }
@@ -14,4 +15,3 @@ export function meta({}: Route.MetaArgs) {
 export default function PoweredByHBase() {
   return <PoweredByHBasePage />;
 }
-

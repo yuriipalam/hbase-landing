@@ -3,10 +3,10 @@ import { AcidSemanticsPage } from "@/pages/acid-semantics";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "ACID Semantics - HBase Project" },
-    { 
-      name: "description", 
-      content: "Apache HBase ACID properties and guarantees specification." 
+    { title: "ACID Semantics - Apache HBase" },
+    {
+      name: "description",
+      content: "Apache HBase ACID properties and guarantees specification."
     }
   ];
 }
@@ -14,4 +14,3 @@ export function meta({}: Route.MetaArgs) {
 export default function AcidSemantics() {
   return <AcidSemanticsPage />;
 }
-

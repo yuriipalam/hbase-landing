@@ -3,7 +3,7 @@ import { DownloadsPage } from "@/pages/downloads";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Downloads - HBase Project" },
+    { title: "Downloads - Apache HBase" },
     {
       name: "description",
       content:

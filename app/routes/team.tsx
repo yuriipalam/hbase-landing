@@ -3,7 +3,7 @@ import { TeamPage } from "@/pages/team";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Team - HBase Project" },
+    { title: "Team - Apache HBase" },
     {
       name: "description",
       content:

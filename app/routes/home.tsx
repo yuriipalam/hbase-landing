@@ -3,8 +3,12 @@ import { HomePage } from "@/pages/home";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" }
+    { title: "Apache HBase" },
+    {
+      name: "description",
+      content:
+        "Apache HBase® is the Hadoop database, a distributed, scalable, big data store."
+    }
   ];
 }
 

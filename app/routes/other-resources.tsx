@@ -3,10 +3,10 @@ import { OtherResourcesPage } from "@/pages/other-resources";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Other Resources - HBase Project" },
-    { 
-      name: "description", 
-      content: "Books and other learning resources about Apache HBase." 
+    { title: "Other Resources - Apache HBase" },
+    {
+      name: "description",
+      content: "Books and other learning resources about Apache HBase."
     }
   ];
 }
@@ -14,4 +14,3 @@ export function meta({}: Route.MetaArgs) {
 export default function OtherResources() {
   return <OtherResourcesPage />;
 }
-

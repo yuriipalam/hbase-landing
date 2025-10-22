@@ -3,7 +3,7 @@ import { MailingListsPage } from "@/pages/mailing-lists";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Mailing Lists - HBase Project" },
+    { title: "Mailing Lists - Apache HBase" },
     {
       name: "description",
       content:
