@@ -1,53 +1,86 @@
-import { MarkdownLayout } from "@/components/markdown-layout";
-import { Calendar } from "lucide-react";
-import content from "./content.md?raw";
+import { Calendar, ExternalLink } from "lucide-react";
+import events from "./events.json";
+
+interface Event {
+  date: string;
+  title: string;
+  location: string;
+  url: string;
+  registrationOpen: boolean;
+}
 
 export function NewsPage() {
   return (
-    <MarkdownLayout
-      components={{
-        p: ({ children }) => {
-          // Check if this paragraph contains a news item (starts with bold date)
-          if (!Array.isArray(children)) {
-            return <p className="mb-4 text-base leading-7">{children}</p>;
-          }
+    <section className="container mx-auto px-4 py-12">
+      <h1 className="my-12 text-center text-4xl font-semibold tracking-tight text-balance md:text-6xl">
+        News
+      </h1>
 
-          // Look for the pattern: **Date** - Content
-          const firstChild = children[0];
-          const hasDatePattern =
-            firstChild &&
-            typeof firstChild === "object" &&
-            firstChild.type === "strong";
+      {/* Apache Event Banner */}
+      <div className="not-prose mb-12 text-center">
+        <p className="text-muted-foreground mb-2 font-semibold">
+          The next Apache Event 👇
+        </p>
+        <a
+          href="https://www.apache.org/events/current-event.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block transition-opacity hover:opacity-80"
+        >
+          <img
+            src="https://www.apache.org/events/current-event-234x60.png"
+            alt="Apache Event"
+            className="mx-auto rounded-lg"
+          />
+        </a>
+      </div>
 
-          if (hasDatePattern) {
-            // Extract date from the strong tag
-            const dateText = firstChild.props?.children;
-            // Everything after the date
-            const restContent = children.slice(1);
-
-            return (
-              <div className="group border-border bg-card hover:border-primary/50 relative mb-4 rounded-lg border p-4 transition-all hover:shadow-md">
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex-shrink-0">
-                    <Calendar className="text-muted-foreground size-4" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-muted-foreground mt-0.5 mb-1 text-sm font-semibold">
-                      {dateText}
-                    </div>
-                    <div className="text-base leading-7">{restContent}</div>
-                  </div>
-                </div>
+      <div className="not-prose space-y-4">
+        {(events as Event[]).map((event, index) => (
+          <div
+            key={index}
+            className="border-border bg-card hover:border-primary/50 group relative rounded-lg border p-4 transition-all hover:shadow-md"
+          >
+            {event.registrationOpen && (
+              <div className="absolute top-3 right-3">
+                <span className="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-1 text-xs font-semibold text-green-600 ring-1 ring-green-500/20 ring-inset dark:text-green-400">
+                  Registration Open
+                </span>
               </div>
-            );
-          }
-
-          // Default paragraph for non-news items
-          return <p className="mb-4 text-base leading-7">{children}</p>;
-        }
-      }}
-    >
-      {content}
-    </MarkdownLayout>
+            )}
+            <div className="flex items-start gap-3">
+              <div className="mt-1 flex-shrink-0">
+                <Calendar className="text-muted-foreground size-4" />
+              </div>
+              <div className="flex-1">
+                <div className="text-muted-foreground mt-0.5 mb-1 text-sm font-semibold">
+                  {event.date}
+                </div>
+                <div className="text-foreground mb-1 text-base leading-7">
+                  {event.url ? (
+                    <a
+                      href={event.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary inline-flex items-center gap-1.5 font-medium underline-offset-4 hover:underline"
+                    >
+                      {event.title}
+                      <ExternalLink className="size-3.5" />
+                    </a>
+                  ) : (
+                    <span className="font-medium">{event.title}</span>
+                  )}
+                </div>
+                {event.location && (
+                  <div className="text-muted-foreground text-sm">
+                    {event.location}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
