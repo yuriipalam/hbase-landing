@@ -25,12 +25,12 @@ export function NewsPage() {
           href="https://www.apache.org/events/current-event.html"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block transition-opacity hover:opacity-80"
+          className="border-primary/30 shadow-primary/20 hover:border-primary/60 hover:shadow-primary/30 inline-block rounded-lg border-2 shadow-lg transition-all duration-700 hover:shadow-2xl"
         >
           <img
             src="https://www.apache.org/events/current-event-234x60.png"
             alt="Apache Event"
-            className="mx-auto rounded-lg"
+            className="rounded-md"
           />
         </a>
       </div>
