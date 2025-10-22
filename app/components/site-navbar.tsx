@@ -64,12 +64,7 @@ export function SiteNavbar() {
           className="relative z-50 flex items-center gap-3"
           aria-label="HBase Home"
         >
-          <img
-            src="/images/logo.png"
-            alt="Apache HBase logo"
-            width={120}
-            height={28}
-          />
+          <img src="/images/logo.svg" alt="Apache HBase logo" width={120} />
           <span className="sr-only">Apache HBase</span>
         </Link>
 

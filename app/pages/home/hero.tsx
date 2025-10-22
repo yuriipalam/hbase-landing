@@ -7,11 +7,16 @@ export function Hero() {
       <div className="container mx-auto px-4 pt-32 pb-16 md:pt-48 md:pb-20">
         <div className="flex flex-col items-center text-center">
           <img
-            src="/images/big-logo.png"
-            alt="Apache HBase logo with orca"
-            width={420}
-            height={100}
-            className="h-auto w-[260px] md:w-[420px]"
+            src="/images/large-logo.svg"
+            alt="Apache HBase logo"
+            width={450}
+            className="dark:hidden"
+          />
+          <img
+            src="/images/dark-theme-large-logo.svg"
+            alt="Apache HBase logo"
+            width={450}
+            className="hidden dark:block"
           />
 
           <h1 className="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-6xl">
