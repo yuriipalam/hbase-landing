@@ -18,14 +18,7 @@ import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router";
-import {
-  asfLinks,
-  documentationLinks,
-  projectLinks,
-  documentationOptionLabels,
-  getDocsURL,
-  docsItems
-} from "./links";
+import { asfLinks, documentationLinks, projectLinks, docsLinks } from "./links";
 import { ThemeToggle } from "./theme-toggle";
 
 const navLinkClass =
@@ -120,31 +113,41 @@ function DocsMenu() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">
-        {documentationLinks.map((item) => (
-          <DropdownMenuItem key={item.label} asChild>
-            <Link
-              to={item.to}
-              target={item.external ? "_blank" : "_self"}
-              aria-label={item.label}
-            >
-              {item.label}
-            </Link>
-          </DropdownMenuItem>
-        ))}
+        {documentationLinks.map((item) =>
+          "to" in item ? (
+            <DropdownMenuItem key={item.label} asChild>
+              <Link
+                to={item.to}
+                target={item.external ? "_blank" : "_self"}
+                aria-label={item.label}
+              >
+                {item.label}
+              </Link>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>{item.label}</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                {item.links.map((item) => (
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link to={item.to} aria-label={item.label}>
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          )
+        )}
         <DropdownMenuSeparator />
-        {Object.keys(docsItems).map((version) => (
-          <DropdownMenuSub key={version}>
-            <DropdownMenuSubTrigger>
-              {version} Documentation
-            </DropdownMenuSubTrigger>
+        {docsLinks.map((group) => (
+          <DropdownMenuSub key={group.label}>
+            <DropdownMenuSubTrigger>{group.label}</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              {docsItems[version].map((item) => (
-                <DropdownMenuItem key={item} asChild>
-                  <Link
-                    to={getDocsURL(version, item)}
-                    aria-label={documentationOptionLabels[item]}
-                  >
-                    {documentationOptionLabels[item]}
+              {group.links.map((item) => (
+                <DropdownMenuItem key={item.label} asChild>
+                  <Link to={item.to} aria-label={item.label}>
+                    {item.label}
                   </Link>
                 </DropdownMenuItem>
               ))}
@@ -287,55 +290,65 @@ function MobileMenu() {
 }
 
 function MobileDocsSection({ onLinkClick }: { onLinkClick: () => void }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+    <Collapsible className="w-full">
       <CollapsibleTrigger className="flex w-full items-center justify-between py-2 text-left font-medium">
         Documentation and API
-        <ChevronRight
-          className={cn("h-4 w-4 transition-transform", isOpen && "rotate-90")}
-        />
+        <ChevronRight className="h-4 w-4 rotate-90 transition-transform group-data-[state=closed]:rotate-0" />
       </CollapsibleTrigger>
       <CollapsibleContent className="w-full space-y-2 pl-4">
-        {documentationLinks.map((link) => (
-          <Link
-            key={link.label}
-            to={link.to}
-            target={link.external ? "_blank" : "_self"}
-            onClick={onLinkClick}
-            className="text-muted-foreground hover:text-foreground flex items-center py-1.5 text-sm"
-          >
-            {link.label}
-            {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
-          </Link>
-        ))}
-        <div className="border-border/40 my-2 border-t pt-2">
-          {Object.keys(docsItems).map((version) => (
-            <Collapsible
-              key={version}
-              open={isOpen}
-              onOpenChange={setIsOpen}
-              className="w-full"
+        {documentationLinks.map((link) =>
+          "to" in link ? (
+            <Link
+              key={link.label}
+              to={link.to}
+              target={link.external ? "_blank" : "_self"}
+              onClick={onLinkClick}
+              className="text-muted-foreground hover:text-foreground flex items-center py-1.5 text-sm"
             >
+              {link.label}
+              {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
+            </Link>
+          ) : (
+            <Collapsible className="w-full">
               <CollapsibleTrigger className="text-muted-foreground hover:text-foreground flex w-full items-center justify-between py-1.5 text-left text-sm">
-                {version} Documentation
+                {link.label}
                 <ChevronRight
                   className={cn(
-                    "h-3 w-3 transition-transform",
-                    isOpen && "rotate-90"
+                    "h-3 w-3 rotate-90 transition-transform group-data-[state=closed]:rotate-0"
                   )}
                 />
               </CollapsibleTrigger>
               <CollapsibleContent className="w-full space-y-1 pl-3">
-                {docsItems[version].map((item) => (
+                {link.links.map((item) => (
                   <Link
-                    key={item}
-                    to={getDocsURL(version, item)}
-                    onClick={onLinkClick}
+                    key={item.label}
+                    to={item.to}
                     className="text-muted-foreground hover:text-foreground flex items-center py-1 text-xs"
                   >
-                    {documentationOptionLabels[item]}
+                    {item.label}
+                  </Link>
+                ))}
+              </CollapsibleContent>
+            </Collapsible>
+          )
+        )}
+        <div className="border-border/40 my-2 border-t pt-2">
+          {docsLinks.map((group) => (
+            <Collapsible key={group.label} className="w-full">
+              <CollapsibleTrigger className="text-muted-foreground hover:text-foreground flex w-full items-center justify-between py-1.5 text-left text-sm">
+                {group.label}
+                <ChevronRight className="h-3 w-3 rotate-90 transition-transform group-data-[state=closed]:rotate-0" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="w-full space-y-1 pl-3">
+                {group.links.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    className="text-muted-foreground hover:text-foreground flex items-center py-1 text-xs"
+                    aria-label={item.label}
+                  >
+                    {item.label}
                   </Link>
                 ))}
               </CollapsibleContent>

@@ -1,36 +1,22 @@
-export interface Link {
+interface LinkType {
   label: string;
   to: string;
   external?: boolean;
 }
 
-export const projectLinks: Link[] = [
+interface NestedLinkType {
+  label: string;
+  links: LinkType[];
+}
+
+export const projectLinks: LinkType[] = [
   {
     label: "Overview",
     to: "/"
   },
   {
-    label: "License",
-    to: "https://www.apache.org/licenses/",
-    external: true
-  },
-  {
     label: "Downloads",
     to: "/downloads"
-  },
-  {
-    label: "Release Notes",
-    to: "https://issues.apache.org/jira/browse/HBASE?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel",
-    external: true
-  },
-  {
-    label: "Issue Tracking",
-    to: "https://issues.apache.org/jira/browse/HBASE",
-    external: true
-  },
-  {
-    label: "Code of Conduct",
-    to: "/code-of-conduct"
   },
   {
     label: "Mailing Lists",
@@ -41,17 +27,16 @@ export const projectLinks: Link[] = [
     to: "/team"
   },
   {
+    label: "Powered by HBase",
+    to: "/powered-by-hbase"
+  },
+  {
     label: "HBase Sponsors",
     to: "/sponsors"
   },
   {
-    label: "Thanks",
-    to: "https://www.apache.org/foundation/sponsors",
-    external: true
-  },
-  {
-    label: "Powered by HBase",
-    to: "/powered-by-hbase"
+    label: "Code of Conduct",
+    to: "/code-of-conduct"
   },
   {
     label: "Other Resources",
@@ -59,7 +44,7 @@ export const projectLinks: Link[] = [
   }
 ];
 
-export const documentationLinks: Link[] = [
+export const documentationLinks: (LinkType | NestedLinkType)[] = [
   {
     label: "Reference Guide",
     to: "https://hbase.apache.org/book.html"
@@ -74,36 +59,56 @@ export const documentationLinks: Link[] = [
     external: true
   },
   {
-    label: "Video/Presentations",
-    to: "https://hbase.apache.org/book.html#other.info"
+    label: "Release Notes",
+    to: "https://issues.apache.org/jira/browse/HBASE?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel",
+    external: true
+  },
+  {
+    label: "Issue Tracking",
+    to: "https://issues.apache.org/jira/browse/HBASE",
+    external: true
   },
   {
     label: "Source Repository",
     to: "/source-repository"
   },
   {
-    label: "Wiki",
-    to: "https://cwiki.apache.org/confluence/display/HADOOP2/Hbase",
-    external: true
-  },
-  {
-    label: "ACID Semantics",
-    to: "/acid-semantics"
-  },
-  {
-    label: "Bulk Loads",
-    to: "https://hbase.apache.org/book.html#arch.bulk.load"
-  },
-  {
-    label: "Metrics",
-    to: "https://hbase.apache.org/book.html#hbase_metrics"
+    label: "Resources",
+    links: [
+      {
+        label: "Wiki",
+        to: "https://cwiki.apache.org/confluence/display/HADOOP2/Hbase",
+        external: true
+      },
+      {
+        label: "Video/Presentations",
+        to: "https://hbase.apache.org/book.html#other.info"
+      },
+      {
+        label: "ACID Semantics",
+        to: "/acid-semantics"
+      },
+      {
+        label: "Bulk Loads",
+        to: "https://hbase.apache.org/book.html#arch.bulk.load"
+      },
+      {
+        label: "Metrics",
+        to: "https://hbase.apache.org/book.html#hbase_metrics"
+      }
+    ]
   }
 ];
 
-export const asfLinks: Link[] = [
+export const asfLinks: LinkType[] = [
   {
     label: "Apache Software Foundation",
     to: "http://www.apache.org/foundation/",
+    external: true
+  },
+  {
+    label: "License",
+    to: "https://www.apache.org/licenses/",
     external: true
   },
   {
@@ -112,8 +117,13 @@ export const asfLinks: Link[] = [
     external: true
   },
   {
-    label: "Sponsoring Apache",
+    label: "Foundation Program",
     to: "http://www.apache.org/foundation/sponsorship.html",
+    external: true
+  },
+  {
+    label: "Sponsors",
+    to: "https://www.apache.org/foundation/sponsors",
     external: true
   },
   {
@@ -131,7 +141,7 @@ type DocumentationOptions =
   | "devApi"
   | "devApiTest";
 
-export const documentationOptionLabels: Record<DocumentationOptions, string> = {
+const documentationOptionLabels: Record<DocumentationOptions, string> = {
   ref: "Reference Guide",
   refPdf: "Reference Guide (PDF)",
   userApi: "User API",
@@ -140,10 +150,7 @@ export const documentationOptionLabels: Record<DocumentationOptions, string> = {
   devApiTest: "Developer API (Test)"
 };
 
-export function getDocsURL(
-  version: string,
-  option: DocumentationOptions
-): string {
+function getDocsURL(version: string, option: DocumentationOptions): string {
   const baseUrl = "https://hbase.apache.org/";
   switch (option) {
     case "ref":
@@ -161,10 +168,20 @@ export function getDocsURL(
   }
 }
 
-export const docsItems: Record<string, DocumentationOptions[]> = {
+const docsItems: Record<string, DocumentationOptions[]> = {
   "1.4": ["ref", "refPdf", "userApi", "userApiTest"],
   "2.3": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
   "2.4": ["ref", "refPdf", "userApi", "userApiTest", "devApi", "devApiTest"],
   "2.5": ["userApi", "userApiTest", "devApi", "devApiTest"],
   "2.6": ["userApi", "userApiTest", "devApi", "devApiTest"]
 };
+
+export const docsLinks: NestedLinkType[] = Object.keys(docsItems).map(
+  (version) => ({
+    label: `${version} Documentation`,
+    links: docsItems[version].map((option) => ({
+      label: documentationOptionLabels[option],
+      to: getDocsURL(version, option)
+    }))
+  })
+);

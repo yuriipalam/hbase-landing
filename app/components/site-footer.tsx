@@ -52,18 +52,33 @@ export function SiteFooter() {
           <div>
             <p className="text-foreground font-medium">Documentation</p>
             <ul className="mt-2 space-y-1">
-              {documentationLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    target={link.external ? "_blank" : "_self"}
-                    className="hover:text-foreground inline-flex items-center"
-                  >
-                    {link.label}
-                    {link.external && <ExternalIcon />}
-                  </Link>
-                </li>
-              ))}
+              {documentationLinks.map((link) =>
+                "to" in link ? (
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      target={link.external ? "_blank" : "_self"}
+                      className="hover:text-foreground inline-flex items-center"
+                    >
+                      {link.label}
+                      {link.external && <ExternalIcon />}
+                    </Link>
+                  </li>
+                ) : (
+                  link.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        to={link.to}
+                        target={link.external ? "_blank" : "_self"}
+                        className="hover:text-foreground inline-flex items-center"
+                      >
+                        {link.label}
+                        {link.external && <ExternalIcon />}
+                      </Link>
+                    </li>
+                  ))
+                )
+              )}
             </ul>
           </div>
           <div>
