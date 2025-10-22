@@ -10,5 +10,6 @@ export default [
   route("powered-by-hbase", "routes/powered-by-hbase.tsx"),
   route("other-resources", "routes/other-resources.tsx"),
   route("source-repository", "routes/source-repository.tsx"),
-  route("acid-semantics", "routes/acid-semantics.tsx")
+  route("acid-semantics", "routes/acid-semantics.tsx"),
+  route("news", "routes/news.tsx")
 ] satisfies RouteConfig;

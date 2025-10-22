@@ -32,8 +32,8 @@ export function CommunitySection() {
           </div>
           <ul className="grid gap-3 text-sm leading-6">
             <li id="news" className="relative p-0">
-              <a
-                href="#news"
+              <Link
+                to="/news"
                 className="border-border/60 bg-background hover:border-primary focus-visible:ring-primary block rounded-lg border p-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 <span className="text-foreground font-medium">
@@ -43,7 +43,7 @@ export function CommunitySection() {
                   HBaseCon and community meetups worldwide.
                 </p>
                 <ArrowUpRight className="text-muted-foreground absolute top-2.5 right-2.5 size-4" />
-              </a>
+              </Link>
             </li>
             <li id="sponsors" className="relative p-0">
               <Link
