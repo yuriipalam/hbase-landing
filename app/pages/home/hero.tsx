@@ -10,13 +10,13 @@ export function Hero() {
             src="/images/large-logo.svg"
             alt="Apache HBase logo"
             width={450}
-            className="dark:hidden"
+            className="px-4 sm:px-0 dark:hidden"
           />
           <img
             src="/images/dark-theme-large-logo.svg"
             alt="Apache HBase logo"
             width={450}
-            className="hidden dark:block"
+            className="hidden px-4 sm:px-0 dark:block"
           />
 
           <h1 className="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-6xl">
