@@ -10,12 +10,14 @@ export function Hero() {
             src="/images/large-logo.svg"
             alt="Apache HBase logo"
             width={450}
+            height={115}
             className="px-4 sm:px-0 dark:hidden"
           />
           <img
             src="/images/dark-theme-large-logo.svg"
             alt="Apache HBase logo"
             width={450}
+            height={115}
             className="hidden px-4 sm:px-0 dark:block"
           />
 
