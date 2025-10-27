@@ -54,6 +54,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             `
           }}
         />
+        <noscript>
+          <style>{`.theme-toggle-wrapper { display: none !important; }`}</style>
+        </noscript>
       </head>
       <body>
         <ThemeProvider defaultTheme="light">

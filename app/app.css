@@ -9,6 +9,7 @@
 }
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant js (&:is(.js *));
 
 :root {
   --background: oklch(1 0 0);

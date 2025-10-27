@@ -32,6 +32,8 @@ export function SiteNavbar() {
       return;
     }
 
+    document.documentElement.classList.add("js");
+
     setIsScrolled(window.scrollY > 0);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -63,16 +65,40 @@ export function SiteNavbar() {
 
         {/* Desktop menus */}
         <div className="hidden items-center gap-4 md:flex">
-          <ProjectMenu />
-          <DocsMenu />
-          <AsfMenu />
-          <ThemeToggle />
+          <div className="js:hidden">
+            <NoJSProjectMenu />
+          </div>
+          <div className="js:block hidden">
+            <ProjectMenu />
+          </div>
+          <div className="js:hidden">
+            <NoJSDocsMenu />
+          </div>
+          <div className="js:block hidden">
+            <DocsMenu />
+          </div>
+          <div className="js:hidden">
+            <NoJSAsfMenu />
+          </div>
+          <div className="js:block hidden">
+            <AsfMenu />
+          </div>
+          <div className="theme-toggle-wrapper">
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Mobile menu */}
         <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
-          <MobileMenu />
+          <div className="theme-toggle-wrapper">
+            <ThemeToggle />
+          </div>
+          <div className="js:hidden">
+            <NoJSMobileMenu />
+          </div>
+          <div className="js:block hidden">
+            <MobileMenu />
+          </div>
         </div>
       </nav>
     </header>
@@ -394,5 +420,243 @@ function MobileMenuSection({
         ))}
       </CollapsibleContent>
     </Collapsible>
+  );
+}
+
+/* No-JS fallback components using details/summary */
+
+function NoJSProjectMenu() {
+  return (
+    <details className="group relative">
+      <summary
+        className={`${navLinkClass} inline-flex cursor-pointer list-none items-center`}
+      >
+        Apache HBase Project <ChevronDown className="ml-1 h-4 w-4" />
+      </summary>
+      <div className="bg-popover text-popover-foreground absolute top-full left-1/2 z-50 mt-1.5 min-w-[12rem] -translate-x-1/2 rounded-md border p-1 shadow-md">
+        {projectLinks.map((item) => (
+          <Link
+            key={item.label}
+            to={item.to}
+            target={item.external ? "_blank" : "_self"}
+            className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+function NoJSDocsMenu() {
+  return (
+    <details className="group relative">
+      <summary
+        className={`${navLinkClass} inline-flex cursor-pointer list-none items-center`}
+      >
+        Documentation and API <ChevronDown className="ml-1 h-4 w-4" />
+      </summary>
+      <div className="bg-popover text-popover-foreground absolute top-full left-1/2 z-50 mt-1.5 min-w-[12rem] -translate-x-1/2 rounded-md border p-1 shadow-md">
+        {documentationLinks.map((item) =>
+          "to" in item ? (
+            <Link
+              key={item.label}
+              to={item.to}
+              target={item.external ? "_blank" : "_self"}
+              aria-label={item.label}
+              className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+            >
+              {item.label}
+            </Link>
+          ) : (
+            <details key={item.label} className="group/sub relative">
+              <summary className="hover:bg-accent hover:text-accent-foreground flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none select-none">
+                {item.label}
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </summary>
+              <div className="bg-popover text-popover-foreground absolute top-0 left-full z-50 ml-1 min-w-[12rem] rounded-md border p-1 shadow-md">
+                {item.links.map((subItem) => (
+                  <Link
+                    key={subItem.label}
+                    to={subItem.to}
+                    aria-label={subItem.label}
+                    className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+                  >
+                    {subItem.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          )
+        )}
+        <div className="bg-muted border-border/40 -mx-1 my-1 h-px" />
+        {docsLinks.map((group) => (
+          <details key={group.label} className="group/sub relative">
+            <summary className="hover:bg-accent hover:text-accent-foreground flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none select-none">
+              {group.label}
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </summary>
+            <div className="bg-popover text-popover-foreground absolute top-0 left-full z-50 ml-1 min-w-[12rem] rounded-md border p-1 shadow-md">
+              {group.links.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  aria-label={item.label}
+                  className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+function NoJSAsfMenu() {
+  return (
+    <details className="group relative">
+      <summary
+        className={`${navLinkClass} inline-flex cursor-pointer list-none`}
+      >
+        ASF <ChevronDown className="ml-1 h-4 w-4" />
+      </summary>
+      <div className="bg-popover text-popover-foreground absolute top-full left-1/2 z-50 mt-1.5 min-w-[12rem] -translate-x-1/2 rounded-md border p-1 shadow-md">
+        {asfLinks.map((item) => (
+          <Link
+            key={item.label}
+            to={item.to}
+            target={item.external ? "_blank" : "_self"}
+            aria-label={item.label}
+            className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+function NoJSMobileMenu() {
+  return (
+    <details className="group relative z-50">
+      <summary className="text-foreground relative flex h-10 w-10 cursor-pointer list-none items-center justify-center p-2">
+        <div className="flex h-5 w-5 flex-col items-center justify-center">
+          <span className="bg-foreground absolute h-0.5 w-5 -translate-y-1.5" />
+          <span className="bg-foreground h-0.5 w-5" />
+          <span className="bg-foreground absolute h-0.5 w-5 translate-y-1.5" />
+        </div>
+      </summary>
+      <div className="bg-background fixed inset-x-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto border-t p-6">
+        <nav className="space-y-4">
+          <NoJSMobileMenuSection
+            title="Apache HBase Project"
+            links={projectLinks}
+          />
+          <NoJSMobileDocsSection />
+          <NoJSMobileMenuSection title="ASF" links={asfLinks} />
+        </nav>
+      </div>
+    </details>
+  );
+}
+
+function NoJSMobileMenuSection({
+  title,
+  links
+}: {
+  title: string;
+  links: typeof projectLinks;
+}) {
+  return (
+    <details className="w-full">
+      <summary className="flex w-full cursor-pointer items-center justify-between py-2 text-left font-medium">
+        {title}
+        <ChevronRight className="h-4 w-4" />
+      </summary>
+      <div className="w-full space-y-2 pt-2 pl-4">
+        {links.map((link) => (
+          <Link
+            key={link.label}
+            to={link.to}
+            target={link.external ? "_blank" : "_self"}
+            className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center py-1.5 text-sm"
+          >
+            {link.label}
+            {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
+          </Link>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+function NoJSMobileDocsSection() {
+  return (
+    <details className="w-full">
+      <summary className="flex w-full cursor-pointer items-center justify-between py-2 text-left font-medium">
+        Documentation and API
+        <ChevronRight className="h-4 w-4" />
+      </summary>
+      <div className="w-full space-y-2 pt-2 pl-4">
+        {documentationLinks.map((link) =>
+          "to" in link ? (
+            <Link
+              key={link.label}
+              to={link.to}
+              target={link.external ? "_blank" : "_self"}
+              className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center py-1.5 text-sm"
+            >
+              {link.label}
+              {link.external && <ExternalLink className="ml-1 h-3 w-3" />}
+            </Link>
+          ) : (
+            <details key={link.label} className="w-full">
+              <summary className="text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center justify-between py-1.5 text-left text-sm">
+                {link.label}
+                <ChevronRight className="h-3 w-3" />
+              </summary>
+              <div className="w-full space-y-1 pt-1 pl-3">
+                {link.links.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center py-1 text-xs"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          )
+        )}
+        <div className="border-border/40 my-2 border-t pt-2">
+          {docsLinks.map((group) => (
+            <details key={group.label} className="w-full">
+              <summary className="text-muted-foreground hover:text-foreground flex w-full cursor-pointer items-center justify-between py-1.5 text-left text-sm">
+                {group.label}
+                <ChevronRight className="h-3 w-3" />
+              </summary>
+              <div className="w-full space-y-1 pt-1 pl-3">
+                {group.links.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center py-1 text-xs"
+                    aria-label={item.label}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </details>
   );
 }
