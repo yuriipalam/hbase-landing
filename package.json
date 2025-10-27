@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "^22.0.0"
   },
   "scripts": {
     "build": "react-router build",
@@ -81,5 +81,8 @@
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.0.0"
   }
 }
