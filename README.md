@@ -96,15 +96,11 @@ This approach ensures the website works for all users, regardless of their brows
   - Catches errors at compile-time instead of runtime
   - Provides autocomplete and better IDE support
   
-- **ESLint** - Code linter (like Checkstyle for Java)
-  - Analyzes code for potential errors and style issues
-  - Enforces coding standards across the project
-  - Configuration: `eslint.config.js`
-  
-- **Prettier** - Code formatter (like google-java-format)
-  - Automatically formats code to maintain consistent style
-  - No more debates about spacing or indentation
-  - Configuration: `prettier.config.js`
+- **ESLint + Prettier** - Code linting and formatting (like Checkstyle + google-java-format)
+  - ESLint analyzes code for potential errors and enforces coding standards
+  - Prettier handles automatic code formatting (spacing, indentation, etc.)
+  - Integrated together: `npm run lint:fix` handles both linting and formatting
+  - Configuration: `eslint.config.js` and `prettier.config.js`
 
 ### Project Architecture
 
@@ -231,14 +227,14 @@ This starts a local development server with:
 - Check if shadcn/ui has what you need first
 - Only create custom components if necessary
 
-**Format code:**
-```bash
-npm run format
-```
-
 **Check code quality:**
 ```bash
 npm run lint
+```
+
+**Fix linting and formatting issues:**
+```bash
+npm run lint:fix
 ```
 
 ### Building for Production
