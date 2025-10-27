@@ -124,6 +124,7 @@ function ProjectMenu() {
           <DropdownMenuItem key={item.label} asChild>
             <Link to={item.to} target={item.external ? "_blank" : "_self"}>
               {item.label}
+              {item.external && <ExternalLink className="size-4" />}
             </Link>
           </DropdownMenuItem>
         ))}
@@ -152,6 +153,7 @@ function DocsMenu() {
                 aria-label={item.label}
               >
                 {item.label}
+                {item.external && <ExternalLink className="size-4" />}
               </Link>
             </DropdownMenuItem>
           ) : (
@@ -162,6 +164,7 @@ function DocsMenu() {
                   <DropdownMenuItem key={item.label} asChild>
                     <Link to={item.to} aria-label={item.label}>
                       {item.label}
+                      {item.external && <ExternalLink className="size-4" />}
                     </Link>
                   </DropdownMenuItem>
                 ))}
@@ -176,8 +179,13 @@ function DocsMenu() {
             <DropdownMenuSubContent>
               {group.links.map((item) => (
                 <DropdownMenuItem key={item.label} asChild>
-                  <Link to={item.to} aria-label={item.label}>
+                  <Link
+                    to={item.to}
+                    target={item.external ? "_blank" : "_self"}
+                    aria-label={item.label}
+                  >
                     {item.label}
+                    {item.external && <ExternalLink className="size-4" />}
                   </Link>
                 </DropdownMenuItem>
               ))}
@@ -206,6 +214,7 @@ function AsfMenu() {
               aria-label={item.label}
             >
               {item.label}
+              {item.external && <ExternalLink className="size-4" />}
             </Link>
           </DropdownMenuItem>
         ))}
@@ -375,10 +384,12 @@ function MobileDocsSection({ onLinkClick }: { onLinkClick: () => void }) {
                   <Link
                     key={item.label}
                     to={item.to}
+                    target={item.external ? "_blank" : "_self"}
                     className="text-muted-foreground hover:text-foreground flex items-center py-1 text-xs"
                     aria-label={item.label}
                   >
                     {item.label}
+                    {item.external && <ExternalLink className="size-4" />}
                   </Link>
                 ))}
               </CollapsibleContent>
@@ -446,6 +457,7 @@ function NoJSProjectMenu() {
             className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
           >
             {item.label}
+            {item.external && <ExternalLink className="size-4" />}
           </Link>
         ))}
       </div>
@@ -472,6 +484,7 @@ function NoJSDocsMenu() {
               className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
             >
               {item.label}
+              {item.external && <ExternalLink className="size-4" />}
             </Link>
           ) : (
             <details key={item.label} className="group/sub relative">
@@ -488,6 +501,7 @@ function NoJSDocsMenu() {
                     className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                   >
                     {subItem.label}
+                    {subItem.external && <ExternalLink className="size-4" />}
                   </Link>
                 ))}
               </div>
@@ -506,10 +520,12 @@ function NoJSDocsMenu() {
                 <Link
                   key={item.label}
                   to={item.to}
+                  target={item.external ? "_blank" : "_self"}
                   aria-label={item.label}
                   className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                 >
                   {item.label}
+                  {item.external && <ExternalLink className="size-4" />}
                 </Link>
               ))}
             </div>
@@ -538,6 +554,7 @@ function NoJSAsfMenu() {
             className="hover:bg-accent hover:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
           >
             {item.label}
+            {item.external && <ExternalLink className="size-4" />}
           </Link>
         ))}
       </div>
@@ -650,10 +667,12 @@ function NoJSMobileDocsSection() {
                   <Link
                     key={item.label}
                     to={item.to}
+                    target={item.external ? "_blank" : "_self"}
                     className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center py-1 text-xs"
                     aria-label={item.label}
                   >
                     {item.label}
+                    {item.external && <ExternalLink className="size-4" />}
                   </Link>
                 ))}
               </div>
