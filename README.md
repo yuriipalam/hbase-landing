@@ -237,6 +237,70 @@ npm run lint
 npm run lint:fix
 ```
 
+### Testing
+
+The project uses [Vitest](https://vitest.dev/) for testing React components.
+
+**Run tests:**
+```bash
+# Run tests in watch mode (for development)
+npm test
+
+# Run tests once (for CI/CD)
+npm run test:run
+
+# Run tests with UI
+npm run test:ui
+```
+
+**Test coverage includes:**
+- Home Page - Hero section, buttons, features, use cases, community sections
+- Theme Toggle - Light/dark mode switching
+- Navigation - Navbar, dropdown menus, links
+- Markdown Rendering - Headings, lists, code blocks, tables, links
+
+**Writing new tests:**
+
+Use the `renderWithProviders` utility in `test/utils.tsx` to ensure components have access to routing and theme context:
+
+```typescript
+import { renderWithProviders, screen } from './utils'
+import { MyComponent } from '@/components/my-component'
+
+describe('MyComponent', () => {
+  it('renders correctly', () => {
+    renderWithProviders(<MyComponent />)
+    expect(screen.getByText('Hello World')).toBeInTheDocument()
+  })
+})
+```
+
+**CI/CD Workflow:**
+
+Before merging or deploying, run these checks in order:
+
+```bash
+# 1. Check linting
+npm run lint
+
+# 2. Check types
+npm run typecheck
+
+# 3. Run tests
+npm run test:run
+```
+
+All three checks must pass before code is considered ready for deployment.
+
+**CI/CD Pipeline Example:**
+```yaml
+# Example for GitHub Actions, GitLab CI, etc.
+- npm run lint      # Fails if linting errors
+- npm run typecheck # Fails if TypeScript errors
+- npm run test:run  # Fails if any tests fail
+- npm run build     # Build for production
+```
+
 ### Building for Production
 
 Create an optimized production build:
