@@ -71,18 +71,21 @@ export function SiteNavbar() {
           <div className="js:block hidden">
             <ProjectMenu />
           </div>
+
           <div className="js:hidden">
             <NoJSDocsMenu />
           </div>
           <div className="js:block hidden">
             <DocsMenu />
           </div>
+
           <div className="js:hidden">
             <NoJSAsfMenu />
           </div>
           <div className="js:block hidden">
             <AsfMenu />
           </div>
+
           <div className="theme-toggle-wrapper">
             <ThemeToggle />
           </div>
@@ -93,6 +96,7 @@ export function SiteNavbar() {
           <div className="theme-toggle-wrapper">
             <ThemeToggle />
           </div>
+
           <div className="js:hidden">
             <NoJSMobileMenu />
           </div>
@@ -151,7 +155,7 @@ function DocsMenu() {
               </Link>
             </DropdownMenuItem>
           ) : (
-            <DropdownMenuSub>
+            <DropdownMenuSub key={item.label}>
               <DropdownMenuSubTrigger>{item.label}</DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 {item.links.map((item) => (
