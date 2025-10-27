@@ -61,18 +61,25 @@ export function MarkdownLayout({
               const isExternal =
                 href?.startsWith("http") &&
                 !href?.startsWith("https://hbase.apache.org/");
-              
+
               // Check if the link contains only an image (no external icon needed)
-              const hasOnlyImage = Array.isArray(children) 
-                ? children.every(child => child?.type === 'img' || typeof child === 'object')
-                : typeof children === 'object';
+              const hasOnlyImage = Array.isArray(children)
+                ? children.every(
+                    (child) =>
+                      child?.type === "img" || typeof child === "object"
+                  )
+                : typeof children === "object";
 
               return isExternal ? (
                 <a
                   href={href ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={hasOnlyImage ? "inline-block" : "text-primary inline underline-offset-4 hover:underline"}
+                  className={
+                    hasOnlyImage
+                      ? "inline-block"
+                      : "text-primary inline underline-offset-4 hover:underline"
+                  }
                 >
                   {children}
                   {!hasOnlyImage && (
