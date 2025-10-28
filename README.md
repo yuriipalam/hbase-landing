@@ -277,28 +277,24 @@ describe('MyComponent', () => {
 
 **CI/CD Workflow:**
 
-Before merging or deploying, run these checks in order:
+Before merging or deploying, run the full CI pipeline:
 
 ```bash
-# 1. Check linting
-npm run lint
-
-# 2. Check types
-npm run typecheck
-
-# 3. Run tests
-npm run test:run
+npm run ci
 ```
 
-All three checks must pass before code is considered ready for deployment.
+This command runs all quality checks and builds the project:
+1. `npm run lint` - Check linting
+2. `npm run typecheck` - Check types
+3. `npm run test:run` - Run tests
+4. `npm run build` - Build for production
+
+All checks must pass before code is considered ready for deployment.
 
 **CI/CD Pipeline Example:**
 ```yaml
 # Example for GitHub Actions, GitLab CI, etc.
-- npm run lint      # Fails if linting errors
-- npm run typecheck # Fails if TypeScript errors
-- npm run test:run  # Fails if any tests fail
-- npm run build     # Build for production
+- npm run ci  # Runs all checks and build
 ```
 
 ### Building for Production

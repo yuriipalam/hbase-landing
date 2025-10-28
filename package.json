@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "ci": "npm run lint && npm run typecheck && npm run test:run && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
