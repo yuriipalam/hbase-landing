@@ -1,1 +1,0 @@
-const e="Architecture",t=["overview","catalog-tables","client","client-request-filters","master","regionserver","regions","bulk-loading","hdfs","timeline-consistent-reads","hbase-mob","snapshot-scanner"],s={title:e,pages:t};export{s as default,t as pages,e as title};
