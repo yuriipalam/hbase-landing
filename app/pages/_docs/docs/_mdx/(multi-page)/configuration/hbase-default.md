@@ -10,17 +10,17 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.rootdir` [!toc]
 
-**Description:** The directory shared by region servers and into which HBase persists.  The URL should be 'fully-qualified' to include the filesystem scheme.  For example, to specify the HDFS directory '/hbase' where the HDFS instance's namenode is running at namenode.example.org on port 9000, set this value to: hdfs://namenode.example.org:9000/hbase.  By default, we write to whatever ${hbase.tmp.dir} is set too -- usually /tmp -- so change this configuration or else all data will be lost on machine restart.  
+**Description:** The directory shared by region servers and into which HBase persists. The URL should be 'fully-qualified' to include the filesystem scheme. For example, to specify the HDFS directory '/hbase' where the HDFS instance's namenode is running at namenode.example.org on port 9000, set this value to: hdfs://namenode.example.org:9000/hbase. By default, we write to whatever \${hbase.tmp.dir} is set too -- usually /tmp -- so change this configuration or else all data will be lost on machine restart.  
 **Default:** `${hbase.tmp.dir}/hbase`
 
 #### `hbase.cluster.distributed` [!toc]
 
-**Description:** The mode the cluster will be in. Possible values are false for standalone mode and true for distributed mode.  If false, startup will run all HBase and ZooKeeper daemons together in the one JVM.  
+**Description:** The mode the cluster will be in. Possible values are false for standalone mode and true for distributed mode. If false, startup will run all HBase and ZooKeeper daemons together in the one JVM.  
 **Default:** `false`
 
 #### `hbase.zookeeper.quorum` [!toc]
 
-**Description:** Comma separated list of servers in the ZooKeeper ensemble (This config. should have been named hbase.zookeeper.ensemble). For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com". By default this is set to localhost for local and pseudo-distributed modes of operation. For a fully-distributed setup, this should be set to a full list of ZooKeeper ensemble servers. If HBASE_MANAGES_ZK is set in hbase-env.sh this is the list of servers which hbase will start/stop ZooKeeper on as part of cluster start/stop.  Client-side, we will take this list of ensemble members and put it together with the hbase.zookeeper.property.clientPort config. and pass it into zookeeper constructor as the connectString parameter.  
+**Description:** Comma separated list of servers in the ZooKeeper ensemble (This config. should have been named hbase.zookeeper.ensemble). For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com". By default this is set to localhost for local and pseudo-distributed modes of operation. For a fully-distributed setup, this should be set to a full list of ZooKeeper ensemble servers. If HBASE_MANAGES_ZK is set in hbase-env.sh this is the list of servers which hbase will start/stop ZooKeeper on as part of cluster start/stop. Client-side, we will take this list of ensemble members and put it together with the hbase.zookeeper.property.clientPort config. and pass it into zookeeper constructor as the connectString parameter.  
 **Default:** `127.0.0.1`
 
 #### `zookeeper.recovery.retry.maxsleeptime` [!toc]
@@ -125,7 +125,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.regionserver.logroll.errors.tolerated` [!toc]
 
-**Description:** The number of consecutive WAL close errors we will allow before triggering a server abort.  A setting of 0 will cause the region server to abort if closing the current WAL writer fails during log rolling.  Even a small value (2 or 3) will allow a region server to ride over transient HDFS errors.  
+**Description:** The number of consecutive WAL close errors we will allow before triggering a server abort. A setting of 0 will cause the region server to abort if closing the current WAL writer fails during log rolling. Even a small value (2 or 3) will allow a region server to ride over transient HDFS errors.  
 **Default:** `2`
 
 #### `hbase.regionserver.free.heap.min.memory.size` [!toc]
@@ -245,7 +245,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.client.pause` [!toc]
 
-**Description:** General client pause value.  Used mostly as value to wait before running a retry of a failed get, region lookup, etc. See hbase.client.retries.number for description of how we backoff from this initial pause amount and how this pause works w/ retries.  
+**Description:** General client pause value. Used mostly as value to wait before running a retry of a failed get, region lookup, etc. See hbase.client.retries.number for description of how we backoff from this initial pause amount and how this pause works w/ retries.  
 **Default:** `100`
 
 #### `hbase.client.pause.server.overloaded` [!toc]
@@ -255,7 +255,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.client.retries.number` [!toc]
 
-**Description:** Maximum retries.  Used as maximum for all retryable operations such as the getting of a cell's value, starting a row update, etc.  Retry interval is a rough function based on hbase.client.pause.  At first we retry at this interval but then with backoff, we pretty quickly reach retrying every ten seconds.  See HConstants#RETRY_BACKOFF for how the backup ramps up.  Change this setting and hbase.client.pause to suit your workload.  
+**Description:** Maximum retries. Used as maximum for all retryable operations such as the getting of a cell's value, starting a row update, etc. Retry interval is a rough function based on hbase.client.pause. At first we retry at this interval but then with backoff, we pretty quickly reach retrying every ten seconds. See HConstants#RETRY_BACKOFF for how the backup ramps up. Change this setting and hbase.client.pause to suit your workload.  
 **Default:** `15`
 
 #### `hbase.client.max.total.tasks` [!toc]
@@ -305,7 +305,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.bulkload.retries.number` [!toc]
 
-**Description:** Maximum retries.  This is maximum number of iterations to atomic bulk loads are attempted in the face of splitting operations 0 means never give up.  
+**Description:** Maximum retries. This is maximum number of iterations to atomic bulk loads are attempted in the face of splitting operations 0 means never give up.  
 **Default:** `10`
 
 #### `hbase.compaction.after.bulkload.enable` [!toc]
@@ -395,7 +395,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.hregion.memstore.flush.size` [!toc]
 
-**Description:** Memstore will be flushed to disk if size of the memstore exceeds this number of bytes.  Value is checked by a thread that runs every hbase.server.thread.wakefrequency.  
+**Description:** Memstore will be flushed to disk if size of the memstore exceeds this number of bytes. Value is checked by a thread that runs every hbase.server.thread.wakefrequency.  
 **Default:** `134217728`
 
 #### `hbase.hregion.percolumnfamilyflush.size.lower.bound.min` [!toc]
@@ -405,12 +405,12 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.hregion.preclose.flush.size` [!toc]
 
-**Description:** If the memstores in a region are this size or larger when we go to close, run a "pre-flush" to clear out memstores before we put up the region closed flag and take the region offline.  On close, a flush is run under the close flag to empty memory.  During this time the region is offline and we are not taking on any writes. If the memstore content is large, this flush could take a long time to complete.  The preflush is meant to clean out the bulk of the memstore before putting up the close flag and taking the region offline so the flush that runs under the close flag has little to do.  
+**Description:** If the memstores in a region are this size or larger when we go to close, run a "pre-flush" to clear out memstores before we put up the region closed flag and take the region offline. On close, a flush is run under the close flag to empty memory. During this time the region is offline and we are not taking on any writes. If the memstore content is large, this flush could take a long time to complete. The preflush is meant to clean out the bulk of the memstore before putting up the close flag and taking the region offline so the flush that runs under the close flag has little to do.  
 **Default:** `5242880`
 
 #### `hbase.hregion.memstore.block.multiplier` [!toc]
 
-**Description:** Block updates if memstore has hbase.hregion.memstore.block.multiplier times hbase.hregion.memstore.flush.size bytes.  Useful preventing runaway memstore during spikes in update traffic.  Without an upper-bound, memstore fills such that when it flushes the resultant flush files take a long time to compact or split, or worse, we OOME.  
+**Description:** Block updates if memstore has hbase.hregion.memstore.block.multiplier times hbase.hregion.memstore.flush.size bytes. Useful preventing runaway memstore during spikes in update traffic. Without an upper-bound, memstore fills such that when it flushes the resultant flush files take a long time to compact or split, or worse, we OOME.  
 **Default:** `4`
 
 #### `hbase.hregion.memstore.mslab.enabled` [!toc]
@@ -480,7 +480,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.hstore.compaction.min` [!toc]
 
-**Description:** The minimum number of StoreFiles which must be eligible for compaction before compaction can run. The goal of tuning hbase.hstore.compaction.min is to avoid ending up with too many tiny StoreFiles to compact. Setting this value to 2 would cause a minor compaction each time you have two StoreFiles in a Store, and this is probably not appropriate. If you set this value too high, all the other values will need to be adjusted accordingly. For most cases, the default value is appropriate  (empty value here, results in 3 by code logic). In previous versions of HBase, the parameter hbase.hstore.compaction.min was named hbase.hstore.compactionThreshold.  
+**Description:** The minimum number of StoreFiles which must be eligible for compaction before compaction can run. The goal of tuning hbase.hstore.compaction.min is to avoid ending up with too many tiny StoreFiles to compact. Setting this value to 2 would cause a minor compaction each time you have two StoreFiles in a Store, and this is probably not appropriate. If you set this value too high, all the other values will need to be adjusted accordingly. For most cases, the default value is appropriate (empty value here, results in 3 by code logic). In previous versions of HBase, the parameter hbase.hstore.compaction.min was named hbase.hstore.compactionThreshold.  
 **Default:** `(empty)`
 
 #### `hbase.hstore.compaction.max` [!toc]
@@ -650,7 +650,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.ipc.client.tcpnodelay` [!toc]
 
-**Description:** Set no delay on rpc socket connections.  See http://docs.oracle.com/javase/1.5.0/docs/api/java/net/Socket.html#getTcpNoDelay()  
+**Description:** Set no delay on rpc socket connections. See http://docs.oracle.com/javase/1.5.0/docs/api/java/net/Socket.html#getTcpNoDelay()  
 **Default:** `true`
 
 #### `hbase.unsafe.regionserver.hostname` [!toc]
@@ -670,7 +670,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.master.kerberos.principal` [!toc]
 
-**Description:** Ex. "hbase/_HOST@EXAMPLE.COM".  The kerberos principal name that should be used to run the HMaster process.  The principal name should be in the form: user/hostname@DOMAIN.  If "_HOST" is used as the hostname portion, it will be replaced with the actual hostname of the running instance.  
+**Description:** Ex. "hbase/_HOST@EXAMPLE.COM". The kerberos principal name that should be used to run the HMaster process. The principal name should be in the form: user/hostname@DOMAIN. If "_HOST" is used as the hostname portion, it will be replaced with the actual hostname of the running instance.  
 **Default:** `(empty)`
 
 #### `hbase.regionserver.keytab.file` [!toc]
@@ -680,12 +680,12 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.regionserver.kerberos.principal` [!toc]
 
-**Description:** Ex. "hbase/_HOST@EXAMPLE.COM".  The kerberos principal name that should be used to run the HRegionServer process.  The principal name should be in the form: user/hostname@DOMAIN.  If "_HOST" is used as the hostname portion, it will be replaced with the actual hostname of the running instance.  An entry for this principal must exist in the file specified in hbase.regionserver.keytab.file  
+**Description:** Ex. "hbase/_HOST@EXAMPLE.COM". The kerberos principal name that should be used to run the HRegionServer process. The principal name should be in the form: user/hostname@DOMAIN. If "_HOST" is used as the hostname portion, it will be replaced with the actual hostname of the running instance. An entry for this principal must exist in the file specified in hbase.regionserver.keytab.file  
 **Default:** `(empty)`
 
 #### `hadoop.policy.file` [!toc]
 
-**Description:** The policy configuration file used by RPC servers to make authorization decisions on client requests.  Only used when HBase security is enabled.  
+**Description:** The policy configuration file used by RPC servers to make authorization decisions on client requests. Only used when HBase security is enabled.  
 **Default:** `hbase-policy.xml`
 
 #### `hbase.superuser` [!toc]
@@ -695,12 +695,12 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.auth.key.update.interval` [!toc]
 
-**Description:** The update interval for master key for authentication tokens in servers in milliseconds.  Only used when HBase security is enabled.  
+**Description:** The update interval for master key for authentication tokens in servers in milliseconds. Only used when HBase security is enabled.  
 **Default:** `86400000`
 
 #### `hbase.auth.token.max.lifetime` [!toc]
 
-**Description:** The maximum lifetime in milliseconds after which an authentication token expires.  Only used when HBase security is enabled.  
+**Description:** The maximum lifetime in milliseconds after which an authentication token expires. Only used when HBase security is enabled.  
 **Default:** `604800000`
 
 #### `hbase.ipc.client.fallback-to-simple-auth-allowed` [!toc]
@@ -710,7 +710,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.ipc.server.fallback-to-simple-auth-allowed` [!toc]
 
-**Description:** When a server is configured to require secure connections, it will reject connection attempts from clients using SASL SIMPLE (unsecure) authentication. This setting allows secure servers to accept SASL SIMPLE connections from clients when the client requests.  When false (the default), the server will not allow the fallback to SIMPLE authentication, and will reject the connection.  WARNING: This setting should ONLY be used as a temporary measure while converting clients over to secure authentication.  It MUST BE DISABLED for secure operation.  
+**Description:** When a server is configured to require secure connections, it will reject connection attempts from clients using SASL SIMPLE (unsecure) authentication. This setting allows secure servers to accept SASL SIMPLE connections from clients when the client requests. When false (the default), the server will not allow the fallback to SIMPLE authentication, and will reject the connection. WARNING: This setting should ONLY be used as a temporary measure while converting clients over to secure authentication. It MUST BE DISABLED for secure operation.  
 **Default:** `false`
 
 #### `hbase.unsafe.client.kerberos.hostname.disable.reversedns` [!toc]
@@ -775,7 +775,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.defaults.for.version.skip` [!toc]
 
-**Description:** Set to true to skip the 'hbase.defaults.for.version' check. Setting this to true can be useful in contexts other than the other side of a maven generation; i.e. running in an IDE.  You'll want to set this boolean to true to avoid seeing the RuntimeException complaint: "hbase-default.xml file seems to be for and old version of HBase (\${hbase.version}), this version is X.X.X-SNAPSHOT"  
+**Description:** Set to true to skip the 'hbase.defaults.for.version' check. Setting this to true can be useful in contexts other than the other side of a maven generation; i.e. running in an IDE. You'll want to set this boolean to true to avoid seeing the RuntimeException complaint: "hbase-default.xml file seems to be for and old version of HBase (\${hbase.version}), this version is X.X.X-SNAPSHOT"  
 **Default:** `false`
 
 #### `hbase.table.lock.enable` [!toc]
@@ -890,12 +890,12 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.dfs.client.read.shortcircuit.buffer.size` [!toc]
 
-**Description:** If the DFSClient configuration dfs.client.read.shortcircuit.buffer.size is unset, we will use what is configured here as the short circuit read default direct byte buffer size. DFSClient native default is 1MB; HBase keeps its HDFS files open so number of file blocks * 1MB soon starts to add up and threaten OOME because of a shortage of direct memory.  So, we set it down from the default.  Make it > the default hbase block size set in the HColumnDescriptor which is usually 64k.  
+**Description:** If the DFSClient configuration dfs.client.read.shortcircuit.buffer.size is unset, we will use what is configured here as the short circuit read default direct byte buffer size. DFSClient native default is 1MB; HBase keeps its HDFS files open so number of file blocks * 1MB soon starts to add up and threaten OOME because of a shortage of direct memory. So, we set it down from the default. Make it > the default hbase block size set in the HColumnDescriptor which is usually 64k.  
 **Default:** `131072`
 
 #### `hbase.regionserver.checksum.verify` [!toc]
 
-**Description:** If set to true (the default), HBase verifies the checksums for hfile blocks. HBase writes checksums inline with the data when it writes out hfiles. HDFS (as of this writing) writes checksums to a separate file than the data file necessitating extra seeks.  Setting this flag saves some on i/o.  Checksum verification by HDFS will be internally disabled on hfile streams when this flag is set.  If the hbase-checksum verification fails, we will switch back to using HDFS checksums (so do not disable HDFS checksums!  And besides this feature applies to hfiles only, not to WALs). If this parameter is set to false, then hbase will not verify any checksums, instead it will depend on checksum verification being done in the HDFS client.  
+**Description:** If set to true (the default), HBase verifies the checksums for hfile blocks. HBase writes checksums inline with the data when it writes out hfiles. HDFS (as of this writing) writes checksums to a separate file than the data file necessitating extra seeks. Setting this flag saves some on i/o. Checksum verification by HDFS will be internally disabled on hfile streams when this flag is set. If the hbase-checksum verification fails, we will switch back to using HDFS checksums (so do not disable HDFS checksums! And besides this feature applies to hfiles only, not to WALs). If this parameter is set to false, then hbase will not verify any checksums, instead it will depend on checksum verification being done in the HDFS client.  
 **Default:** `true`
 
 #### `hbase.hstore.bytes.per.checksum` [!toc]
@@ -980,7 +980,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.rest-csrf.browser-useragents-regex` [!toc]
 
-**Description:** A comma-separated list of regular expressions used to match against an HTTP request's User-Agent header when protection against cross-site request forgery (CSRF) is enabled for REST server by setting hbase.rest.csrf.enabled to true.  If the incoming User-Agent matches any of these regular expressions, then the request is considered to be sent by a browser, and therefore CSRF prevention is enforced.  If the request's User-Agent does not match any of these regular expressions, then the request is considered to be sent by something other than a browser, such as scripted automation.  In this case, CSRF is not a potential attack vector, so the prevention is not enforced.  This helps achieve backwards-compatibility with existing automation that has not been updated to send the CSRF prevention header.  
+**Description:** A comma-separated list of regular expressions used to match against an HTTP request's User-Agent header when protection against cross-site request forgery (CSRF) is enabled for REST server by setting hbase.rest.csrf.enabled to true. If the incoming User-Agent matches any of these regular expressions, then the request is considered to be sent by a browser, and therefore CSRF prevention is enforced. If the request's User-Agent does not match any of these regular expressions, then the request is considered to be sent by something other than a browser, such as scripted automation. In this case, CSRF is not a potential attack vector, so the prevention is not enforced. This helps achieve backwards-compatibility with existing automation that has not been updated to send the CSRF prevention header.  
 **Default:** `^Mozilla.*,^Opera.*`
 
 #### `hbase.security.exec.permission.checks` [!toc]
@@ -1035,7 +1035,7 @@ description: "Complete reference of all HBase configuration properties with desc
 
 #### `hbase.replication.rpc.codec` [!toc]
 
-**Description:** The codec that is to be used when replication is enabled so that the tags are also replicated. This is used along with HFileV3 which supports tags in them.  If tags are not used or if the hfile version used is HFileV2 then KeyValueCodec can be used as the replication codec. Note that using KeyValueCodecWithTags for replication when there are no tags causes no harm.  
+**Description:** The codec that is to be used when replication is enabled so that the tags are also replicated. This is used along with HFileV3 which supports tags in them. If tags are not used or if the hfile version used is HFileV2 then KeyValueCodec can be used as the replication codec. Note that using KeyValueCodecWithTags for replication when there are no tags causes no harm.  
 **Default:** `org.apache.hadoop.hbase.codec.KeyValueCodecWithTags`
 
 #### `hbase.replication.source.maxthreads` [!toc]

@@ -23,20 +23,19 @@ import {
   DocsBody as FumaDocsBody,
   DocsDescription as FumaDocsDescription,
   DocsPage as FumaDocsPage,
-  DocsTitle as FumaDocsTitle,
-  PageLastUpdate
+  DocsTitle as FumaDocsTitle
 } from "@/components/docs/layout/docs/page";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type * as PageTree from "fumadocs-core/page-tree";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { useParams } from "react-router";
-import { getGithubLastEdit } from "fumadocs-core/content/github";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getPageTreePeers } from "fumadocs-core/page-tree";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Link } from "@/components/link";
 import type { MDXComponents } from "mdx/types";
+import type { TOCItemType } from "fumadocs-core/toc";
 
 // Extend default MDX components to include Steps globally
 // Note: We'll override the 'a' component in the renderer to handle route-specific logic
@@ -124,21 +123,6 @@ const renderer = toClientRenderer(
     const mdxFileRoute = `${isSinglePage ? "" : `${trimmedRoute === "" ? "preface" : trimmedRoute}.mdx`}`;
     const isGrouppedRoute = !!trimmedRoute && grouppedRoutes.includes(trimmedRoute);
 
-    const [lastModifiedTime, setLastModifiedTime] = useState<Date | undefined>(undefined);
-
-    useEffect(() => {
-      getGithubLastEdit({
-        owner: "apache",
-        repo: "hbase",
-        // file path in Git
-        path: `${baseGithubPath}${mdxFileRoute}`
-      }).then((value) => {
-        if (value) {
-          setLastModifiedTime(value);
-        }
-      });
-    }, [isSinglePage, mdxFileRoute]);
-
     // Custom link component that transforms /docs/ links to anchors on single-page
     const CustomLink = ({ href, children, ...rest }: any) => {
       let transformedHref = href;
@@ -173,12 +157,80 @@ const renderer = toClientRenderer(
       a: CustomLink
     };
 
+    const renderPdfTocItems = (items: TOCItemType[]) => {
+      const groups: { parent: TOCItemType; children: TOCItemType[] }[] = [];
+      let current: { parent: TOCItemType; children: TOCItemType[] } | null = null;
+      for (const item of items) {
+        if (item.depth === 1) {
+          current = { parent: item, children: [] };
+          groups.push(current);
+        } else {
+          if (current) current.children.push(item);
+        }
+      }
+
+      return (
+        <ol className="mt-3 space-y-1 font-medium">
+          {groups.map(({ parent, children }) => (
+            <li key={parent.url}>
+              <a href={parent.url}>{parent.title}</a>
+
+              {children.length > 0 && (
+                <ol className="mt-1 list-inside list-decimal space-y-1 pl-2">
+                  {children.map((child) => (
+                    <li key={child.url}>
+                      <a href={child.url}>{child.title}</a>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </li>
+          ))}
+        </ol>
+      );
+    };
+    const printToc = isSinglePage
+      ? toc.filter((item: any) => item.depth === 1 || item.depth === 2)
+      : toc;
+
     return (
       <FumaDocsPage toc={filteredToc} tableOfContent={{ style: "clerk" }}>
         <title>{frontmatter.title}</title>
         <meta name="description" content={frontmatter.description} />
-        <FumaDocsTitle>{frontmatter.title}</FumaDocsTitle>
-        <FumaDocsDescription>{frontmatter.description}</FumaDocsDescription>
+
+        {/* Only for printing PDF book */}
+        {isSinglePage && (
+          <section className="print-only">
+            <div className="mt-40 flex break-after-page flex-col items-center justify-center gap-6 text-center">
+              <img
+                src="/images/large-logo.svg"
+                alt="Apache HBase logo"
+                className="mx-auto block h-24 w-auto dark:hidden"
+              />
+              <img
+                src="/images/dark-theme-large-logo.svg"
+                alt="Apache HBase logo"
+                className="mx-auto hidden h-24 w-auto dark:block"
+              />
+              <h1 className="text-4xl font-semibold tracking-wide">
+                Apache HBase® Reference Guide
+              </h1>
+              <p className="text-fd-muted-foreground text-base">Apache HBase Team</p>
+            </div>
+          </section>
+        )}
+        {isSinglePage && printToc.length > 0 && (
+          <nav className="print-only break-after-page" aria-label="Table of contents">
+            <h2 className="text-2xl font-semibold tracking-wide">Contents</h2>
+            {renderPdfTocItems(printToc)}
+          </nav>
+        )}
+        {/* End of block */}
+
+        <div className="no-print">
+          <FumaDocsTitle>{frontmatter.title}</FumaDocsTitle>
+          <FumaDocsDescription>{frontmatter.description}</FumaDocsDescription>
+        </div>
         <FumaDocsBody>
           <Mdx components={mdxComponents} />
           {route !== undefined && isGrouppedRoute && (
@@ -197,18 +249,14 @@ const renderer = toClientRenderer(
         </FumaDocsBody>
 
         {route !== undefined && (
-          <div className="flex items-end gap-3">
-            <a
-              href={`https://github.com/apache/hbase/${baseGithubPath}${mdxFileRoute}`}
-              rel="noreferrer noopener"
-              target="_blank"
-              className="text-fd-secondary-foreground bg-fd-secondary hover:text-fd-accent-foreground hover:bg-fd-accent w-fit rounded-xl border p-2 text-sm font-medium transition-colors"
-            >
-              Edit on GitHub
-            </a>
-
-            {lastModifiedTime && <PageLastUpdate date={lastModifiedTime} />}
-          </div>
+          <a
+            href={`https://github.com/apache/hbase/${baseGithubPath}${mdxFileRoute}`}
+            rel="noreferrer noopener"
+            target="_blank"
+            className="text-fd-secondary-foreground bg-fd-secondary hover:text-fd-accent-foreground hover:bg-fd-accent w-fit rounded-xl border p-2 text-sm font-medium transition-colors"
+          >
+            Edit on GitHub
+          </a>
         )}
       </FumaDocsPage>
     );

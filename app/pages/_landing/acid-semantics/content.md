@@ -114,11 +114,11 @@ All of the above guarantees must be possible within Apache HBase. For users who 
 
 ## More Information
 
-For more information, see the [client architecture](https://hbase.apache.org/book.html#client) or [data model](https://hbase.apache.org/book.html#datamodel) sections in the Apache HBase Reference Guide.
+For more information, see the [client architecture](/docs/architecture/client) or [data model](/docs/datamodel) sections in the Apache HBase Reference Guide.
 
 ## Footnotes
 
-[1] A consistent view is not guaranteed intra-row scanning -- i.e. fetching a portion of a row in one RPC then going back to fetch another portion of the row in a subsequent RPC. Intra-row scanning happens when you set a limit on how many values to return per Scan#next (See [Scan#setBatch(int)](http://hbase.apache.org/devapidocs/org/apache/hadoop/hbase/client/Scan.html#setBatch(int))).
+[1] A consistent view is not guaranteed intra-row scanning -- i.e. fetching a portion of a row in one RPC then going back to fetch another portion of the row in a subsequent RPC. Intra-row scanning happens when you set a limit on how many values to return per Scan#next (See [Scan#setBatch(int)](<http://hbase.apache.org/devapidocs/org/apache/hadoop/hbase/client/Scan.html#setBatch(int)>)).
 
 [2] In the context of Apache HBase, "durably on disk" implies an hflush() call on the transaction log. This does not actually imply an fsync() to magnetic media, but rather just that the data has been written to the OS cache on all replicas of the log. In the case of a full datacenter power loss, it is possible that the edits are not truly durable.
 
